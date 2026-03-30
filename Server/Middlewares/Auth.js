@@ -26,3 +26,29 @@ exports.auth = async(req, res, next) => {
         })
     }
 }
+
+
+exports.isOwner = async(req, res, next) => {
+    try{
+        const {role} = req.user;
+        if(!role){
+            return res.status(400).json({
+                success : false,
+                message : "User role is not defined",
+            })
+        }
+        if(role !== "Owner"){
+            return res.status(400).json({
+                success : false,
+                message : "This is protected route for owner",
+            })
+        }
+        next();
+    }
+    catch(error){
+        return res.status(500).json({
+            success : false,
+            message : "Internal Server error"
+        })
+    }
+}

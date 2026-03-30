@@ -16,11 +16,11 @@ dbConnect();
 
 // import routes
 const auth = require("./Routes/Auth");
-
+const organisation = require("./Routes/Organisation");
 
 // map routes
 app.use("/api/v1/auth", auth);
-
+app.use("/api/v1/organisation", organisation);
 
 
 // start server
