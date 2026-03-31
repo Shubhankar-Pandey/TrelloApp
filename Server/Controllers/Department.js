@@ -61,3 +61,74 @@ exports.createDepartment = async(req, res) => {
         })
     }
 }
+
+
+
+exports.getAllPublicIssuesOfDepartment = async(req, res) => {
+    try{
+        const {departmentId} = req.body;
+        
+        if(!departmentId){
+            return res.status(400).json({
+                success : false,
+                message : "DepartmentId is missing",
+            })
+        }
+
+        const data = await Department.findById(departmentId)
+        .populate({
+            path : "issues",
+            match : {privacy : "Public"},
+            populate: [
+                { path: "departmentId" },
+                { path: "userId" },
+                { path: "organisationId" }
+            ]
+        }).exec();
+
+        if(!data){
+            return res.status(404).json({
+                success : false,
+                message : "Department is not found",
+            })
+        }
+
+        if(data.privacy === "Private"){
+            return res.status(401).json({
+                success : false,
+                message : "This is department is private",
+            })
+        }
+
+
+        let filterData = [];
+            const issuesArray = data.issues || [];
+            for(let j = 0; j<issuesArray.length; j++){
+                const currIssue = issuesArray[j];
+                const newData = {
+                    _id : currIssue._id,
+                    title : currIssue.title,
+                    description : currIssue.description,
+                    departmentTitle : currIssue.departmentId.title,
+                    ownerName : currIssue.userId.firstName + " " + currIssue.userId.lastName,
+                    organisationTitle :  currIssue.organisationId.title,
+                    createdAt : currIssue.createdAt,
+                    updatedAt : currIssue.updatedAt,
+                }
+                filterData.push(newData);
+            }
+        
+
+        return res.status(200).json({
+            success : true,
+            data : filterData,
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false,
+            message : "Internal Server Error",
+        })
+    }
+}
