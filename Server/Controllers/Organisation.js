@@ -1,5 +1,7 @@
 const Organisation = require("../Models/Organisations");
-const User = require("../Models/USERS");
+const User = require("../Models/User");
+
+
 
 
 exports.createOrganisation = async(req, res) => {
@@ -13,11 +15,19 @@ exports.createOrganisation = async(req, res) => {
                 message : "Missing data",
             })
         }
+
+        const existUser = await User.findById(userId);
+        if(!existUser){
+            return res.status(404).json({
+                success : false,
+                message : "User not found",
+            })
+        }
         
         const newOrganisation = await Organisation.create({
             title, 
             description,
-            owner : userId,
+            ownerId : userId,
             privacy,
         })
 
@@ -25,11 +35,13 @@ exports.createOrganisation = async(req, res) => {
             $push : {
                 organisations : newOrganisation._id,
             }
-        }, {new : true})
+        }, { returnDocument: "after" })
 
         return res.status(200).json({
             success : true, 
             message : "Organisation created successfully",
+            newOrganisation,
+            updatedUser
         })
 
     }
@@ -41,3 +53,7 @@ exports.createOrganisation = async(req, res) => {
         })
     }
 }
+
+
+
+

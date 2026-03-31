@@ -17,10 +17,17 @@ dbConnect();
 // import routes
 const auth = require("./Routes/Auth");
 const organisation = require("./Routes/Organisation");
+const department = require("./Routes/Department");
+const issue = require("./Routes/Issue");
+
+
 
 // map routes
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/organisation", organisation);
+app.use("/api/v1/organisation/department", department);
+app.use("/api/v1/organisation/department/issue", issue);
+
 
 
 // start server

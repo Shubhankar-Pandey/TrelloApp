@@ -1,4 +1,4 @@
-const Users = require("../Models/USERS");
+const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
@@ -27,7 +27,7 @@ exports.sendOtp = async(req, res) => {
             });
         }
 
-        const userExist = await Users.findOne({email : email});
+        const userExist = await User.findOne({email : email});
 
         if(userExist){
             return res.status(409).json({
@@ -103,7 +103,7 @@ exports.signup = async(req, res) => {
             });
         }
 
-        const userExist = await Users.findOne({email : email});
+        const userExist = await User.findOne({email : email});
         if(userExist){
             return res.status(403).json({
                 success : false,
@@ -113,7 +113,7 @@ exports.signup = async(req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await Users.create({
+        await User.create({
             email,
             password : hashedPassword,
             firstName,
@@ -158,7 +158,7 @@ exports.login = async(req, res) => {
             });
         }
 
-        const userExist = await Users.findOne({email : email});
+        const userExist = await User.findOne({email : email});
         if(!userExist){
             return res.status(404).json({
                 success : false,

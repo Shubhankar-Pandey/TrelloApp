@@ -1,32 +1,31 @@
 const mongoose = require("mongoose");
 
 
-const organisationSchema = new mongoose.Schema({
+const departmentSchema = new mongoose.Schema({
     title : {
-        type : String,
+        type : String, 
         required : true,
     },
     description : {
         type : String, 
         required : true,
     },
-    ownerId : {
+    organisationId : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "User",
-        require : true,
+        ref : "Organisation",
+        required : true,
     },
-    departments : [
+    issues : [
         {
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Department",
+            ref : "Issue",
         }
     ],
     privacy : {
-        type : String, 
+        type : String,
         enum : ["Private", "Public"],
         required : true,
     }
 })
 
-
-module.exports = mongoose.model("Organisation", organisationSchema);
+module.exports = mongoose.model("Department", departmentSchema);
