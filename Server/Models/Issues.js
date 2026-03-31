@@ -33,6 +33,10 @@ const issuesSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Organisation",
         required : true,
+    },
+    assignedTo : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "User"
     }
 }, { timestamps: true });
 

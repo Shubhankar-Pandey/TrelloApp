@@ -3,10 +3,13 @@ const router = express.Router();
 
 
 const {auth, isOwner} = require("../Middlewares/Auth");
-const {createIssue} = require("../Controllers/Issue");
+const {createIssue, getAllIssueDetails} = require("../Controllers/Issue");
+
 
 
 router.post("/createIssue", auth, isOwner, createIssue);
+router.get("/getAllIssueDetails", getAllIssueDetails);
+
 
 
 module.exports = router;

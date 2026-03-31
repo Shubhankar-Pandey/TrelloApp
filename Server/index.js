@@ -10,9 +10,11 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 
+
 // connect to db
 const {dbConnect} = require("./Configure/Database");
 dbConnect();
+
 
 // import routes
 const auth = require("./Routes/Auth");

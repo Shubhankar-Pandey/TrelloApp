@@ -80,3 +80,56 @@ exports.createIssue = async(req, res) => {
         })
     }
 }
+
+
+exports.getAllIssueDetails = async(req, res) => {
+    try{
+        let data = await Organisation.find({privacy : "Public"})
+        .populate({
+            path : "departments",
+            match : {privacy : "Public"},
+            populate : {
+                path : "issues",
+                match : {privacy : "Public"},
+                populate : [
+                    {path : "departmentId"},
+                    {path : "userId"},
+                    {path : "organisationId"},
+                ]
+            }
+        }).exec();
+
+        let filterData = [];
+        for(let i = 0; i<data.length; i++){
+            const deparmentsArray = data[i].departments || [];
+            for(let j = 0; j<deparmentsArray.length; j++){
+                const issuesArray = deparmentsArray[j].issues || [];
+                for(let k = 0; k<issuesArray.length; k++){
+                    const newData = {
+                        _id : issuesArray[k]._id,
+                        title : issuesArray[k].title,
+                        description : issuesArray[k].description,
+                        departmentTitle : issuesArray[k].departmentId.title,
+                        ownerName : issuesArray[k].userId.firstName + " " + issuesArray[k].userId.lastName,
+                        organisationTitle :  issuesArray[k].organisationId.title,
+                        createdAt : issuesArray[k].createdAt,
+                        updatedAt : issuesArray[k].updatedAt,
+                    }
+                    filterData.push(newData);
+                }
+            }
+        }
+
+        return res.status(200).json({
+            success : true,
+            data : filterData,
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error",
+        })
+    }
+}

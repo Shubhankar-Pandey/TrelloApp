@@ -56,4 +56,33 @@ exports.createOrganisation = async(req, res) => {
 
 
 
+exports.getAllOrganisationsAndItsDepartments = async(req, res) => {
+    try{
+        let data = await Organisation.find({ privacy: "Public" })
+        .populate({
+            path : "departments",
+            match : {privacy : "Public"},
+            populate : {
+                path: "issues", 
+                match : {privacy : "Public"}
+            }
+        }).exec()
+        
+
+        return res.status(200).json({
+            success : true,
+            data,
+        });
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false,
+            message : "Internal Server error",
+        })
+    }
+}
+
+
+
 
