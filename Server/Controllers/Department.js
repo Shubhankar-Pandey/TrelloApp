@@ -114,11 +114,12 @@ exports.getAllPublicIssuesOfDepartment = async(req, res) => {
                     organisationTitle :  currIssue.organisationId.title,
                     createdAt : currIssue.createdAt,
                     updatedAt : currIssue.updatedAt,
+                    assignedTo : currIssue.assignedTo,
                 }
                 filterData.push(newData);
             }
-        
 
+            
         return res.status(200).json({
             success : true,
             data : filterData,

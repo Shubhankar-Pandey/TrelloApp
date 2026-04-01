@@ -19,10 +19,9 @@ const otpSchema = new mongoose.Schema({
     }
 })
 
-
 async function sendEmail (email, otp){
     try{
-        const mailResponse = await mailSender(email, "Email verification", `<h1> Your otp is : ${otp} </h1>`);
+        await mailSender(email, "Email verification", `<h1> Your otp is : ${otp} </h1>`);
     }
     catch(error){
         console.log("Error occurred in sending mail : ", error);
@@ -33,7 +32,7 @@ async function sendEmail (email, otp){
 // post save middlware
 otpSchema.post("save", async(doc) => {
     try{
-        await sendEmail(doc.email, doc.otp);
+        await sendEmail(doc.email,  doc.otp);
     }
     catch(error){
         console.log("OTP email failed:", error);

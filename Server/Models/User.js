@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
             ref : "Organisation",
         }
     ],
+    resetPasswordToken : {
+        type : String,
+    },
+    resetPasswordExpires : {
+        type : Date,
+    }
 })
 
 

@@ -114,6 +114,7 @@ exports.getAllPublicIssueDetails = async(req, res) => {
                         organisationTitle :  issuesArray[k].organisationId.title,
                         createdAt : issuesArray[k].createdAt,
                         updatedAt : issuesArray[k].updatedAt,
+                        assignedTo : issuesArray[k].assignedTo,
                     }
                     filterData.push(newData);
                 }
