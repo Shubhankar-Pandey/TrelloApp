@@ -68,6 +68,7 @@ exports.sendOtp = async(req, res) => {
 
 exports.signup = async(req, res) => {
     try{
+        console.log("reached in signup controller in server : ", req.body);
         const {password, confirmPassword, firstName, lastName, role, otp} = req.body;
         let {email} = req.body;
         
@@ -95,6 +96,16 @@ exports.signup = async(req, res) => {
             });
         }
 
+        console.log("before finding userExist");
+        const userExist = await User.findOne({email});
+        if(userExist){
+            return res.status(403).json({
+                success : false,
+                message : "User with this email already exist",
+            })
+        }
+
+        console.log("before otp checking");
         const compareOtp = await Otp.findOne({email});
         if(!compareOtp || otp !== compareOtp.otp){
             return res.status(400).json({
@@ -103,16 +114,10 @@ exports.signup = async(req, res) => {
             });
         }
 
-        const userExist = await User.findOne({email : email});
-        if(userExist){
-            return res.status(403).json({
-                success : false,
-                message : "User with this email already exist",
-            })
-        }
-
+        console.log("before password hashing");
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        console.log("before user creation");
         await User.create({
             email,
             password : hashedPassword,
@@ -120,6 +125,7 @@ exports.signup = async(req, res) => {
             lastName,
             role,
         })
+        console.log("after user creation");
 
         return res.status(200).json({
             success : true,
@@ -137,6 +143,7 @@ exports.signup = async(req, res) => {
 
 
 exports.login = async(req, res) => {
+    console.log("reached in login controller : ", req.body);
     try{
         const {password} = req.body;
         let {email} = req.body;
@@ -158,13 +165,17 @@ exports.login = async(req, res) => {
             });
         }
 
-        const userExist = await User.findOne({email : email});
+        console.log("before userExist");
+
+        const userExist = await User.findOne({email});
         if(!userExist){
             return res.status(404).json({
                 success : false,
                 message : "No user exist with this email, please signup first",
             })
         }
+
+        console.log("userExist : ", userExist);
 
         if(await bcrypt.compare(password, userExist.password)){
 
@@ -184,13 +195,15 @@ exports.login = async(req, res) => {
 
             userExist.password = undefined;
 
-            return res.cookie("token", token, options).status(200).json({
+            return res.status(200).json({
                 success : true, 
                 message : "Login successfully",
                 userExist,
+                token,
             })
         }
         else{
+            console.log("wrong password");
             return res.status(400).json({
                 success : false,
                 message : "Wrong Password",
