@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
+const cors = require("cors"); // integrate backend with frontend
+
 
 
 const dotenv = require("dotenv");
@@ -9,6 +11,12 @@ dotenv.config();
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+	cors({
+		origin:process.env.FRONTEND_URL,
+		credentials:true,
+	})
+)
 
 
 // connect to db
