@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../Redux/authSlice';
 import { login } from '../Services/Operations/authAPI';
-import { useEffect } from 'react';
-import {toast} from "react-hot-toast"
+
 
 
 function LoginPage() {
@@ -21,7 +20,7 @@ function LoginPage() {
         formState: { errors },
     } = useForm();
 
-    // FIX 1: Renamed to onSubmit to avoid shadowing useForm's handleSubmit
+
     async function onSubmit(data) {
         console.log("data = ", data);
         dispatch(setLoading(true));
@@ -61,7 +60,7 @@ function LoginPage() {
                 {/* Headline */}
                 <div className='flex flex-wrap gap-x-2 justify-center items-center mb-10'>
                     <p className='text-3xl text-white tracking-tight'>
-                        Welcome back — lets resolve what
+                        Login — lets resolve what
                     </p>
                     <GradientText
                         colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
@@ -80,7 +79,7 @@ function LoginPage() {
                         Welcome back
                     </h2>
                     <p className='text-white/40 text-sm mb-8 font-light'>
-                        Sign in to your account to continue
+                        Login to your account to continue
                     </p>
 
                     {/* FIX 2: handleSubmit now correctly wraps your onSubmit callback */}
@@ -118,7 +117,7 @@ function LoginPage() {
                                 >
                                     Password
                                 </label>
-                                <a href='#' className='text-[#B19EEF] text-xs hover:text-[#FF9FFC] transition-colors duration-200'>
+                                <a href='/forgetPassword' className='text-[#B19EEF] text-xs hover:text-[#FF9FFC] transition-colors duration-200'>
                                     Forgot password?
                                 </a>
                             </div>
@@ -153,7 +152,7 @@ function LoginPage() {
 
                     <p className='text-center text-white/30 text-xs mt-8 font-light'>
                         Don't have an account?{' '}
-                        <a href='#' className='text-[#B19EEF] hover:text-[#FF9FFC] transition-colors duration-200'>
+                        <a href='/signup' className='text-[#B19EEF] hover:text-[#FF9FFC] transition-colors duration-200'>
                             Signup
                         </a>
                     </p>

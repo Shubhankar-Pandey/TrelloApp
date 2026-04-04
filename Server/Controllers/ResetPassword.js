@@ -62,7 +62,7 @@ exports.resetPassword = async(req, res) => {
     try{
         const {token, password, confirmPassword} = req.body;
         
-        if(!token || !password || !confirmPassword){
+        if(!password || !confirmPassword){
             return res.status(400).json({
                 success : false,
                 message : "Details are missing",

@@ -2,7 +2,7 @@ import {toast} from "react-hot-toast"
 import { apiConnector } from "../ApiConnector/apiConnector";
 
 import  {endpoints} from "../ApisEndpoints/apis";
-import { setToken, removeSignupData } from "../../Redux/authSlice";
+import { setToken } from "../../Redux/authSlice";
 
 
 
@@ -10,10 +10,10 @@ const {
   SENDOTP_API,
   SIGNUP_API,
   LOGIN_API,
-  LOGOUT_API,
   RESETPASSTOKEN_API,
   RESETPASSWORD_API,
 } = endpoints
+
 
 
 export const sendOtp = async(email, navigate) => {
@@ -36,6 +36,8 @@ export const sendOtp = async(email, navigate) => {
     }
     toast.dismiss(toastId)
 }
+
+
 
 
 export const signup = async(password, confirmPassword, otp,  firstName, lastName, email, role, navigate) => {
@@ -67,6 +69,8 @@ export const signup = async(password, confirmPassword, otp,  firstName, lastName
 }
 
 
+
+
 export const login = async(email, password, navigate, dispatch) => {
     console.log("reached login service : ", email , " ", password);
     const toastId = toast.loading("Loading...");
@@ -83,6 +87,47 @@ export const login = async(email, password, navigate, dispatch) => {
     catch(error){
         console.log("Login api error : ", error);
         toast.error("Login failed");
+    }
+    toast.dismiss(toastId);
+}
+
+
+
+export const resetPasswordToken = async(email, navigate) => {
+    console.log("reached in resetPasswordToken");
+    const toastId = toast.loading("Loading...");
+    try{
+        const response = await apiConnector("POST", RESETPASSTOKEN_API, {email});
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+        console.log("resetPasswordToken api response : ", response);
+        toast.success("Password reset link is sent on your registered email address");
+        navigate("/");
+    }
+    catch(error){
+        console.log("resetPasswordToken Api error : ", error);
+        toast.error("Request failed");
+    }
+    toast.dismiss(toastId);
+}
+
+
+
+
+export const resetPassword = async(token, password, confirmPassword, navigate) => {
+    const toastId = toast.loading("Loading...");
+    try{
+        const response = await apiConnector("POST", RESETPASSWORD_API, {token, password, confirmPassword});
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+        toast.success("Password reset successfull");
+        navigate("/login");
+    }
+    catch(error){
+        console.log("resetPassword api error : ", error);
+        toast.error("Request failed");
     }
     toast.dismiss(toastId);
 }

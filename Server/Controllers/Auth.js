@@ -217,25 +217,3 @@ exports.login = async(req, res) => {
         })
     }
 }
-
-
-
-exports.logout = (req, res) => {
-    try{
-        const options = {
-            httpOnly : true,
-            sameSite : "lax",
-            expires : new Date(Date.now() + 2*60*60*1000),
-        }
-        return res.clearCookie("token", options).status(200).json({
-            success : true, 
-            message : "Logout Successfull",
-        })
-    }
-    catch(error){
-        return res.status(500).json({
-            success : false,
-            message : error.message,
-        })
-    }
-}

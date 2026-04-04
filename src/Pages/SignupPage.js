@@ -231,7 +231,7 @@ function SignupPage() {
                     <p className='text-center text-white/30 text-xs mt-8 font-light'>
                         Already have an account?{' '}
                         <Link to='/login' className='text-[#B19EEF] hover:text-[#FF9FFC] transition-colors duration-200 no-underline'>
-                            Sign in
+                            Login
                         </Link>
                     </p>
                 </div>

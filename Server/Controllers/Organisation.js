@@ -59,14 +59,20 @@ exports.createOrganisation = async(req, res) => {
 exports.getAllOrganisationsAndItsDepartments = async(req, res) => {
     try{
         let data = await Organisation.find({ privacy: "Public" })
-        .populate({
-            path : "departments",
-            match : {privacy : "Public"},
-            populate : {
-                path: "issues", 
-                match : {privacy : "Public"}
+        .populate([
+            {
+                path : "departments",
+                match : {privacy : "Public"},
+                populate : {
+                    path: "issues", 
+                    match : {privacy : "Public"}
+                }
+            },
+            {
+                path : "ownerId",
+                select: "firstName lastName"
             }
-        }).exec()
+    ]).exec()
         
 
         return res.status(200).json({

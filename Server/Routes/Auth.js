@@ -13,7 +13,6 @@ const {resetPasswordToken, resetPassword} = require("../Controllers/ResetPasswor
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/sendOtp", sendOtp);
-router.post("/logout", auth, logout);
 router.post("/resetPasswordToken", resetPasswordToken);
 router.post("/resetPassword", resetPassword);
 
