@@ -15,14 +15,16 @@ function OrganisationsPage() {
         try {
             dispatch(setLoading(true));
             const response = await getAllOrganisations();
+
             if (!response.data.success) {
-                toast.error("Error in loading the page");
+                toast.error("Error loading organisations");
                 return;
             }
+
             setResult(response.data.data);
         } catch (error) {
-            console.log(error);
-            toast.error("Error in loading the page");
+            console.error(error);
+            toast.error("Error loading organisations");
         } finally {
             dispatch(setLoading(false));
         }
@@ -33,34 +35,33 @@ function OrganisationsPage() {
     }, []);
 
     return (
-        <div className='min-h-screen bg-black px-6 py-10 pt-24'>
+        <div className='min-h-screen bg-white px-6 py-10 pt-24'>
             <div className='max-w-5xl mx-auto'>
 
-                {/* Page header */}
+                {/* Header */}
                 <div className='mb-8'>
-                    <h1 className='text-2xl font-semibold text-white tracking-tight'>
+                    <h1 className='text-2xl font-semibold text-gray-900'>
                         Organisations
                     </h1>
-                    <p className='text-sm text-white/40 mt-1'>
+                    <p className='text-sm text-gray-500 mt-1'>
                         Browse all public organisations and their departments.
                     </p>
-                    {/* Teal + indigo accent line */}
-                    <div className='mt-4 h-px w-full bg-gradient-to-r from-teal-500/50 via-indigo-500/30 to-transparent' />
+                    <div className='mt-4 h-px w-full bg-gradient-to-r from-indigo-200 via-indigo-100 to-transparent' />
                 </div>
 
-                {/* Loading skeleton */}
+                {/* Loading */}
                 {loading && (
                     <div className='flex flex-col gap-4'>
                         {[...Array(3)].map((_, i) => (
                             <div
                                 key={i}
-                                className='h-52 rounded-2xl bg-white/[0.03] border border-white/5 animate-pulse'
+                                className='h-52 rounded-2xl bg-gray-100 border border-gray-200 animate-pulse'
                             />
                         ))}
                     </div>
                 )}
 
-                {/* Org list */}
+                {/* Organisations */}
                 {!loading && result.length > 0 && (
                     <div className='flex flex-col gap-4'>
                         {result.map((organisation, index) => (
@@ -69,17 +70,15 @@ function OrganisationsPage() {
                     </div>
                 )}
 
-                {/* Empty state */}
+                {/* Empty */}
                 {!loading && result.length === 0 && (
-                    <div className='flex flex-col items-center justify-center py-24 gap-3'>
-                        <div className='w-10 h-10 rounded-xl bg-teal-500/5 border border-teal-500/15 flex items-center justify-center'>
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                <rect x="1.5" y="1.5" width="6" height="10" rx="1.5" stroke="#2dd4bf" strokeWidth="1.3" strokeOpacity="0.7"/>
-                                <rect x="10.5" y="1.5" width="6" height="6" rx="1.5" stroke="#6366f1" strokeWidth="1.3" strokeOpacity="0.5"/>
-                                <rect x="10.5" y="10.5" width="6" height="6" rx="1.5" stroke="#6366f1" strokeWidth="1.3" strokeOpacity="0.3"/>
-                            </svg>
+                    <div className='flex flex-col items-center py-24 gap-3'>
+                        <div className='w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center'>
+                            📦
                         </div>
-                        <p className='text-sm text-white/30'>No public organisations found.</p>
+                        <p className='text-sm text-gray-500'>
+                            No organisations found.
+                        </p>
                     </div>
                 )}
 

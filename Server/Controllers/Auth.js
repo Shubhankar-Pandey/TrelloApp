@@ -165,7 +165,7 @@ exports.login = async(req, res) => {
             });
         }
 
-        console.log("before userExist");
+        // console.log("before userExist");
 
         const userExist = await User.findOne({email});
         if(!userExist){
@@ -175,7 +175,7 @@ exports.login = async(req, res) => {
             })
         }
 
-        console.log("userExist : ", userExist);
+        // console.log("userExist : ", userExist);
 
         if(await bcrypt.compare(password, userExist.password)){
 
@@ -186,12 +186,6 @@ exports.login = async(req, res) => {
             }
 
             const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn : "2h"})
-
-            const options = {
-                httpOnly : true,
-                sameSite : "lax",
-                expires : new Date(Date.now() + 2*60*60*1000),
-            }
 
             userExist.password = undefined;
 
