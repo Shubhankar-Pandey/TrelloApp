@@ -82,6 +82,7 @@ exports.createIssue = async(req, res) => {
 }
 
 
+
 exports.getAllPublicIssueDetails = async(req, res) => {
     try{
         let data = await Organisation.find({privacy : "Public"})

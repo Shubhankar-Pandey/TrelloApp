@@ -5,22 +5,22 @@ function Department({ department }) {
     const navigate = useNavigate();
 
     return (
-        <div className='flex flex-col gap-3 p-4 rounded-2xl border border-gray-200 bg-white hover:border-indigo-300 hover:shadow-sm transition-all duration-200 h-full'>
+        <div className='flex flex-col gap-3 p-4 rounded-2xl border border-gray-800 bg-gray-900 hover:border-indigo-500 hover:shadow-md transition-all duration-200 h-full'>
 
             {/* Title */}
-            <p className='text-sm font-semibold text-gray-900'>
+            <p className='text-sm font-semibold text-white'>
                 {department.title}
             </p>
 
             {/* Description */}
             {department.description && (
-                <p className='text-xs text-gray-500 line-clamp-2'>
+                <p className='text-xs text-gray-400 line-clamp-2'>
                     {department.description}
                 </p>
             )}
 
             {/* Issues */}
-            <span className='text-xs font-medium text-indigo-600'>
+            <span className='text-xs font-medium text-indigo-400'>
                 {department.issues.length} {department.issues.length === 1 ? 'issue' : 'issues'}
             </span>
 

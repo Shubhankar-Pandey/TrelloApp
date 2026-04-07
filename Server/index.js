@@ -29,6 +29,8 @@ const auth = require("./Routes/Auth");
 const organisation = require("./Routes/Organisation");
 const department = require("./Routes/Department");
 const issue = require("./Routes/Issue");
+const owner = require("./Routes/Owner");
+
 
 
 
@@ -37,6 +39,8 @@ app.use("/api/v1/auth", auth);
 app.use("/api/v1/organisation", organisation);
 app.use("/api/v1/organisation/department", department);
 app.use("/api/v1/organisation/department/issue", issue);
+app.use("/api/v1/owner", owner);
+
 
 
 

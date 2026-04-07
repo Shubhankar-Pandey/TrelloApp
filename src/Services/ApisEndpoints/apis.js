@@ -14,3 +14,9 @@ export const endpoints = {
 export const organisation_endPoints = {
   GET_ALL_ORG : BASE_URL + "/organisation/getAllOrganisationsAndItsDepartments",
 }
+
+
+// Owner end points
+export const owner_endPoints = {
+  GET_ALL_DETAILS_OF_OWNER : BASE_URL + "/owner/getAllDetailOfOwner"
+}

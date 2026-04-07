@@ -82,7 +82,7 @@ export const login = async(email, password, navigate, dispatch) => {
         }
         toast.success("Login successfull");
         dispatch(setToken(response.data.token));
-        navigate("/");
+        navigate("/myDashboard");
     }
     catch(error){
         console.log("Login api error : ", error);

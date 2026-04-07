@@ -35,18 +35,18 @@ function OrganisationsPage() {
     }, []);
 
     return (
-        <div className='min-h-screen bg-white px-6 py-10 pt-24'>
+        <div className='min-h-screen bg-gray-950 px-6 py-10 pt-24'>
             <div className='max-w-5xl mx-auto'>
 
                 {/* Header */}
                 <div className='mb-8'>
-                    <h1 className='text-2xl font-semibold text-gray-900'>
+                    <h1 className='text-2xl font-semibold text-white'>
                         Organisations
                     </h1>
-                    <p className='text-sm text-gray-500 mt-1'>
+                    <p className='text-sm text-gray-400 mt-1'>
                         Browse all public organisations and their departments.
                     </p>
-                    <div className='mt-4 h-px w-full bg-gradient-to-r from-indigo-200 via-indigo-100 to-transparent' />
+                    <div className='mt-4 h-px w-full bg-gradient-to-r from-indigo-700 via-indigo-500 to-transparent' />
                 </div>
 
                 {/* Loading */}
@@ -55,7 +55,7 @@ function OrganisationsPage() {
                         {[...Array(3)].map((_, i) => (
                             <div
                                 key={i}
-                                className='h-52 rounded-2xl bg-gray-100 border border-gray-200 animate-pulse'
+                                className='h-52 rounded-2xl bg-gray-800 border border-gray-700 animate-pulse'
                             />
                         ))}
                     </div>
@@ -73,10 +73,10 @@ function OrganisationsPage() {
                 {/* Empty */}
                 {!loading && result.length === 0 && (
                     <div className='flex flex-col items-center py-24 gap-3'>
-                        <div className='w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center'>
+                        <div className='w-10 h-10 rounded-xl bg-indigo-900 border border-indigo-700 flex items-center justify-center'>
                             📦
                         </div>
-                        <p className='text-sm text-gray-500'>
+                        <p className='text-sm text-gray-400'>
                             No organisations found.
                         </p>
                     </div>

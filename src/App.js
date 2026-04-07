@@ -9,12 +9,15 @@ import Navbar from "./Components/Common/Navbar";
 import ForgetPasswordPage from "./Pages/ForgetPasswordPage";
 import ResetPassword from "./Pages/ResetPassword";
 import OrganisationsPage from "./Pages/OrganisationsPage";
+import PrivateRoute from "./Components/Common/PrivateRoute";
+import DashboardPage from "./Pages/DashboardPage";
+import MyDashboard from "./Components/Core/Dashboard/MyDashboard";
 
 
 
 function App() {
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen min-h-screen bg-black">
       <Navbar/>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
@@ -24,6 +27,15 @@ function App() {
         <Route path="/forgetPassword" element={<ForgetPasswordPage/>}/>
         <Route path="/resetPassword/:token" element={<ResetPassword/>}/>
         <Route path="/organisations" element={<OrganisationsPage/>}/>
+
+        <Route element={
+          <PrivateRoute>
+            <DashboardPage/>
+          </PrivateRoute>
+        }>
+          <Route path="/myDashboard" element={<MyDashboard/>}/>
+        </Route>
+
       </Routes>
     </div>
   );

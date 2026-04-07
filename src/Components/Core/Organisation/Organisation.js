@@ -42,18 +42,18 @@ function Organisation({ organisation }) {
     };
 
     return (
-        <div className='flex flex-col gap-4 p-5 rounded-2xl border border-gray-200 bg-white hover:shadow-md transition-all'>
+        <div className='flex flex-col gap-4 p-5 rounded-2xl border border-gray-800 bg-gray-900 hover:shadow-lg transition-all'>
 
             {/* Top */}
             <div className='flex items-start justify-between gap-4'>
 
                 <div className='flex flex-col gap-1 min-w-0'>
-                    <h3 className='text-base font-semibold text-gray-900'>
+                    <h3 className='text-base font-semibold text-white'>
                         {organisation.title}
                     </h3>
 
                     {organisation.description && (
-                        <p className='text-sm text-gray-500 line-clamp-1'>
+                        <p className='text-sm text-gray-400 line-clamp-1'>
                             {organisation.description}
                         </p>
                     )}
@@ -63,7 +63,7 @@ function Organisation({ organisation }) {
                         <div className='w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white font-bold'>
                             {organisation.ownerId?.firstName?.[0]?.toUpperCase()}
                         </div>
-                        <span className='text-xs text-gray-500'>
+                        <span className='text-xs text-gray-400'>
                             {organisation.ownerId?.firstName} {organisation.ownerId?.lastName}
                         </span>
                     </div>
@@ -79,11 +79,11 @@ function Organisation({ organisation }) {
             </div>
 
             {/* Divider */}
-            <div className='h-px bg-gray-200' />
+            <div className='h-px bg-gray-800' />
 
             {/* Departments */}
             {organisation.departments.length === 0 ? (
-                <p className='text-xs text-gray-400'>No departments yet.</p>
+                <p className='text-xs text-gray-500'>No departments yet.</p>
             ) : (
                 <div className='flex items-stretch gap-2'>
 
@@ -93,8 +93,8 @@ function Organisation({ organisation }) {
                         disabled={!canScrollLeft}
                         className={`w-8 flex items-center justify-center rounded-xl border transition
                         ${canScrollLeft
-                                ? 'border-gray-300 hover:bg-gray-100'
-                                : 'border-gray-100 text-gray-300 cursor-not-allowed'
+                                ? 'border-gray-600 hover:bg-gray-800 text-gray-300'
+                                : 'border-gray-800 text-gray-600 cursor-not-allowed'
                             }`}
                     >
                         ←
@@ -119,8 +119,8 @@ function Organisation({ organisation }) {
                         disabled={!canScrollRight}
                         className={`w-8 flex items-center justify-center rounded-xl border transition
                         ${canScrollRight
-                                ? 'border-gray-300 hover:bg-gray-100'
-                                : 'border-gray-100 text-gray-300 cursor-not-allowed'
+                                ? 'border-gray-600 hover:bg-gray-800 text-gray-300'
+                                : 'border-gray-800 text-gray-600 cursor-not-allowed'
                             }`}
                     >
                         →
@@ -128,7 +128,6 @@ function Organisation({ organisation }) {
 
                 </div>
             )}
-
         </div>
     );
 }

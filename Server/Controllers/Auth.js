@@ -143,7 +143,7 @@ exports.signup = async(req, res) => {
 
 
 exports.login = async(req, res) => {
-    console.log("reached in login controller : ", req.body);
+    // console.log("reached in login controller : ", req.body);
     try{
         const {password} = req.body;
         let {email} = req.body;
