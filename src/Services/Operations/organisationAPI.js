@@ -14,7 +14,7 @@ export const getAllOrganisations = async() => {
     try{
         const response = await apiConnector("GET", GET_ALL_ORG);
         if(!response.data.success){
-            toast.error("Something went wrong");
+            toast.error("Something went wrong in organisationAPI");
             throw new Error(response.data.message);
         }
         // console.log("getAllOrganisations api response : ", response);
@@ -22,7 +22,7 @@ export const getAllOrganisations = async() => {
     }
     catch(error){
         console.log(error);
-        toast.error("Something went wrong");
+        toast.error("Something went wrong in catch block in organisation API");
     }
 }
 

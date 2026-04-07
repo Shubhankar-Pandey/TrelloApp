@@ -18,6 +18,7 @@ exports.createIssue = async(req, res) => {
             })
         }
 
+
         const existDepartment = await Department.findById(departmentId);
         if(!existDepartment){
             return res.status(404).json({
@@ -25,6 +26,8 @@ exports.createIssue = async(req, res) => {
                 message : "Department not exist",
             })
         }
+
+
 
         const existOrganisation = await Organisation.findById(organisationId);
         if(!existOrganisation){
@@ -42,12 +45,15 @@ exports.createIssue = async(req, res) => {
             })
         }
 
+
+
         if(existDepartment.organisationId.toString() !== organisationId){
             return res.status(400).json({
                 success : false,
                 message : "This department is not part of your organisation",
             })
         }
+
 
         const newIssue = await Issue.create({
             title,
@@ -57,6 +63,7 @@ exports.createIssue = async(req, res) => {
             userId, 
             organisationId,
         })
+
 
         const updatedDepartment = await Department.findByIdAndUpdate(departmentId, {
             $push : {
@@ -80,6 +87,8 @@ exports.createIssue = async(req, res) => {
         })
     }
 }
+
+
 
 
 

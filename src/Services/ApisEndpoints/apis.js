@@ -16,6 +16,12 @@ export const organisation_endPoints = {
 }
 
 
+// issue end points 
+export const issue_endPoints = {
+  GET_ALL_PUBLIC_ISSUE_DETAILS : BASE_URL + "/organisation/department/issue/getAllPublicIssueDetails",
+}
+
+
 // Owner end points
 export const owner_endPoints = {
   GET_ALL_DETAILS_OF_OWNER : BASE_URL + "/owner/getAllDetailOfOwner"

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../Common/Modal";
-import { removeToken, setToken } from "../../../Redux/authSlice";
+import { removeToken } from "../../../Redux/authSlice";
 import { useDispatch } from "react-redux";
 
 function Sidebar(){
@@ -13,7 +13,6 @@ function Sidebar(){
     const handleCancelLogout = () => setModalData(null);
     const handleConfirmLogout = () => {
         setModalData(null);
-        dispatch(setToken(null));
         dispatch(removeToken());
         navigate("/", { replace: true });
     };
@@ -37,7 +36,7 @@ function Sidebar(){
         }`;
 
     return (
-        <div className="h-screen w-[240px] bg-[#020617] border-r border-[#1f2937] p-4 flex flex-col justify-between pt-24">
+        <div className="h-screen w-[240px] bg-black border-r border-[#1f2937] p-4 flex flex-col justify-between pt-24">
 
             {/* Top Section */}
             <div className="flex flex-col gap-2">
@@ -48,23 +47,23 @@ function Sidebar(){
 
                 <div className="w-full border-t-2 border-white/25 mb-2"></div>
 
-                <NavLink to="/dashboard" className={linkClass}>
+                <NavLink to="/mydashboard" className={linkClass}>
                     My Dashboard
                 </NavLink>
 
-                <NavLink to="/profile" className={linkClass}>
+                <NavLink to="/myprofile" className={linkClass}>
                     My Profile
                 </NavLink>
 
-                <NavLink to="/organisations" className={linkClass}>
-                    Organisations
+                <NavLink to="/myOrganisations" className={linkClass}>
+                    My Organisations
                 </NavLink>
 
-                <NavLink to="/issues" className={linkClass}>
-                    Issues
+                <NavLink to="/myIssues" className={linkClass}>
+                    My Issues
                 </NavLink>
 
-                <NavLink to="/tracker" className={linkClass}>
+                <NavLink to="/issueTracker" className={linkClass}>
                     Issue Tracker
                 </NavLink>
 

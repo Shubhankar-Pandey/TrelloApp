@@ -36,7 +36,8 @@ const issuesSchema = new mongoose.Schema({
     },
     assignedTo : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "User"
+        ref : "User",
+        default : null,
     }
 }, { timestamps: true });
 
