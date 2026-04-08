@@ -3,7 +3,8 @@ import { issue_endPoints } from "../ApisEndpoints/apis";
 import {toast} from "react-hot-toast"
 
 const {
-    GET_ALL_PUBLIC_ISSUE_DETAILS
+    GET_ALL_PUBLIC_ISSUE_DETAILS,
+    CREATE_ISSUE,
 } = issue_endPoints;
 
 
@@ -22,5 +23,25 @@ export const getAllPublicIssueDetails = async() => {
         console.log(error);
         toast.error("Error in fetching details");
         return null;
+    }
+}
+
+
+export const createIssue = async(token, title, description, privacy, departmentId, organisationId) => {
+    try{
+        const response = await apiConnector("POST", CREATE_ISSUE, {
+            title, description, privacy, departmentId, organisationId,
+        },
+        {Authorization : `Bearer ${token}`}
+        )
+        if(!response || !response.data.message){
+            toast.error("Somthing went wrong");
+            return null;
+        }
+        return response;
+    }
+    catch(error){
+        console.log(error);
+        toast.error(error.message);
     }
 }

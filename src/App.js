@@ -14,7 +14,7 @@ import DashboardPage from "./Pages/DashboardPage";
 import MyDashboard from "./Components/Core/Dashboard/MyDashboard";
 import MyOrganisations from "./Components/Core/Dashboard/MyOrganisations";
 import AllPublicIssues from "./Pages/AllPublicIssues";
-
+import CreationBoard from "./Pages/CreationBoard";
 
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
         <Route path="/forgetPassword" element={<ForgetPasswordPage/>}/>
         <Route path="/resetPassword/:token" element={<ResetPassword/>}/>
         <Route path="/organisations" element={<OrganisationsPage/>}/>
-        <Route path="issues" element={<AllPublicIssues/>}/>
+        <Route path="/issues" element={<AllPublicIssues/>}/>
 
         <Route element={
           <PrivateRoute>
@@ -38,6 +38,7 @@ function App() {
         }>
           <Route path="/myDashboard" element={<MyDashboard/>}/>
           <Route path="/myOrganisations" element={<MyOrganisations/>}/>
+          <Route path="/creationBoard/:step" element={<CreationBoard/>}/>
         </Route>
 
       </Routes>

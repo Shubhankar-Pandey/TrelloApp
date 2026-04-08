@@ -1,9 +1,12 @@
+import HeroSection from "../Components/Core/HomePage/HeroSection"
 
 
 function HomePage(){
     return (
         <div>
-            <h1>This is Home Page</h1>
+            
+            <HeroSection/>
+                
         </div>
     )
 }

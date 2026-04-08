@@ -13,6 +13,7 @@ import {
   HiOutlineCheckCircle,
   HiOutlineClock,
 } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -260,6 +261,11 @@ function MyOrganisations() {
   }, [token]);
 
   const organisations = result?.organisations ?? [];
+  
+  const navigate = useNavigate();
+  function handleOnClick(){
+    navigate(`/creationBoard/${1}`);
+  }
 
   return (
     <div
@@ -281,7 +287,7 @@ function MyOrganisations() {
           </div>
 
           {/* New Org button */}
-          <button
+          <button onClick={handleOnClick}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl
                        bg-cyan-500 hover:bg-cyan-400 active:scale-95
                        text-slate-900 font-bold text-sm

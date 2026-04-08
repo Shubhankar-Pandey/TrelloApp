@@ -1,5 +1,7 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
+
+
 // AUTH ENDPOINTS
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/sendOtp",
@@ -13,12 +15,20 @@ export const endpoints = {
 // Organisation end point
 export const organisation_endPoints = {
   GET_ALL_ORG : BASE_URL + "/organisation/getAllOrganisationsAndItsDepartments",
+  CREATE_ORG : BASE_URL + "/organisation/createOrganisation",
 }
 
 
 // issue end points 
 export const issue_endPoints = {
   GET_ALL_PUBLIC_ISSUE_DETAILS : BASE_URL + "/organisation/department/issue/getAllPublicIssueDetails",
+  CREATE_ISSUE : BASE_URL + "/organisation/department/issue/createIssue",
+}
+
+
+// department end points 
+export const department_endPoints = {
+  CREATE_DEPARTMENT : BASE_URL + "/organisation/department/createDepartment",
 }
 
 

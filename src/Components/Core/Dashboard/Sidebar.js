@@ -36,7 +36,7 @@ function Sidebar(){
         }`;
 
     return (
-        <div className="h-screen w-[240px] bg-black border-r border-[#1f2937] p-4 flex flex-col justify-between pt-24">
+        <div className="h-screen w-[240px] bg-slate-900/70 border-r border-[#1f2937] p-4 flex flex-col justify-between pt-24">
 
             {/* Top Section */}
             <div className="flex flex-col gap-2">
@@ -51,12 +51,12 @@ function Sidebar(){
                     My Dashboard
                 </NavLink>
 
-                <NavLink to="/myprofile" className={linkClass}>
-                    My Profile
-                </NavLink>
-
                 <NavLink to="/myOrganisations" className={linkClass}>
                     My Organisations
+                </NavLink>
+
+                <NavLink to="/creationBoard/1" className={linkClass}>
+                    Creation Board
                 </NavLink>
 
                 <NavLink to="/myIssues" className={linkClass}>

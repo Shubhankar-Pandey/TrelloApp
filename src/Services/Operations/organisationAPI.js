@@ -6,6 +6,7 @@ import {organisation_endPoints} from "../ApisEndpoints/apis"
 
 const {
     GET_ALL_ORG,
+    CREATE_ORG,
 } = organisation_endPoints
 
 
@@ -23,6 +24,29 @@ export const getAllOrganisations = async() => {
     catch(error){
         console.log(error);
         toast.error("Something went wrong in catch block in organisation API");
+    }
+}
+
+
+export const createOrganisation = async(token, title, description, privacy) => {
+    try{
+        const response = await apiConnector("POST", CREATE_ORG, {
+            title, description, privacy
+        },
+        {
+            Authorization : `Bearer ${token}`
+        }
+        )
+
+        if(!response || !response.data.success){
+            toast.error("Something went wrong while creating organisation");
+            throw new Error(response.data.message);
+        }
+        return response;
+    }
+    catch(error){
+        console.log(error);
+        toast.error("Something went wrong while creating organisation");
     }
 }
 
