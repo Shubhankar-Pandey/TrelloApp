@@ -2,7 +2,7 @@ import {toast} from "react-hot-toast"
 import { apiConnector } from "../ApiConnector/apiConnector";
 
 import  {endpoints} from "../ApisEndpoints/apis";
-import { setToken } from "../../Redux/authSlice";
+import { setRole, setToken } from "../../Redux/authSlice";
 
 
 
@@ -82,6 +82,7 @@ export const login = async(email, password, navigate, dispatch) => {
         }
         toast.success("Login successfull");
         dispatch(setToken(response.data.token));
+        dispatch(setRole(response.data.role));
         navigate("/myDashboard");
     }
     catch(error){
