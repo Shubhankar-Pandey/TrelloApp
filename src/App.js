@@ -17,7 +17,7 @@ import AllPublicIssues from "./Pages/AllPublicIssues";
 import CreationBoard from "./Pages/CreationBoard";
 import MyIssue from "./Components/Core/Dashboard/MyIssue";
 import IssueTracker from "./Components/Core/Dashboard/IssueTracker";
-
+import Request from "./Components/Core/Dashboard/Request";
 
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
           <Route path="/creationBoard/:step" element={<CreationBoard/>}/>
           <Route path="/myIssues" element={<MyIssue/>}/>
           <Route path="/issueTracker" element={<IssueTracker/>}/>
+          <Route path="/requests" element={<Request/>}/>
         </Route>
 
       </Routes>

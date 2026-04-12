@@ -36,3 +36,15 @@ export const department_endPoints = {
 export const owner_endPoints = {
   GET_ALL_DETAILS_OF_OWNER : BASE_URL + "/owner/getAllDetailOfOwner"
 }
+
+
+// employee end points
+export const employee_endPoints = {
+  GET_ALL_EMPLOYEES : BASE_URL + "/employee/getAllEmployees",
+}
+
+
+// request end points
+export const request_endPoints = {
+  GET_ALL_REQUEST_CAME_TO_ME : BASE_URL + "/request/getAllRequestCameToMe"
+}

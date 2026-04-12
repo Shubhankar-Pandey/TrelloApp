@@ -30,10 +30,10 @@ function StatusBadge({ status }) {
 // ── stat card ───────────────────────────────────────────────────────────────
 function StatCard({ label, count, sub, accent }) {
   const accents = {
-    total: "from-violet-500/20 to-violet-500/5 border-violet-500/30 text-violet-300",
-    open: "from-amber-500/20 to-amber-500/5 border-amber-500/30 text-amber-300",
-    working: "from-blue-500/20 to-blue-500/5 border-blue-500/30 text-blue-300",
-    done: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-300",
+    total: "from-violet-500/20 to-violet-500/5 border-violet-500 text-violet-300",
+    open: "from-amber-500/20 to-amber-500/5 border-amber-500 text-amber-300",
+    working: "from-blue-500/20 to-blue-500/5 border-blue-500 text-blue-300",
+    done: "from-emerald-500/20 to-emerald-500/5 border-emerald-500 text-emerald-300",
   };
 
   return (

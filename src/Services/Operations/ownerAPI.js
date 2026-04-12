@@ -21,7 +21,7 @@ export const getAllDetailOfOwner = async(token) => {
             toast.error(response.data.message);
             throw new Error(response.data.message);
         }
-        console.log("getAllDetailOfOwner API response : ", response);
+        // console.log("getAllDetailOfOwner API response : ", response);
         return response.data;
     }
     catch(error){

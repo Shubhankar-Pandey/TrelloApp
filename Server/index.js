@@ -30,7 +30,8 @@ const organisation = require("./Routes/Organisation");
 const department = require("./Routes/Department");
 const issue = require("./Routes/Issue");
 const owner = require("./Routes/Owner");
-
+const request = require("./Routes/Request");
+const employee = require("./Routes/Employee");
 
 
 
@@ -40,7 +41,8 @@ app.use("/api/v1/organisation", organisation);
 app.use("/api/v1/organisation/department", department);
 app.use("/api/v1/organisation/department/issue", issue);
 app.use("/api/v1/owner", owner);
-
+app.use("/api/v1/request", request);
+app.use("/api/v1/employee", employee);
 
 
 

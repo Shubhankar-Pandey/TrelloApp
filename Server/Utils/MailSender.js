@@ -18,7 +18,7 @@ exports.mailSender = async (email, title, body) => {
 
         // send mail using transporter 
         let info = await transporter.sendMail({
-            from : "TrelloApp",
+            from : "Trello App",
             to : `${email}`,
             subject : `${title}`,
             html : `${body}`,

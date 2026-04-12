@@ -3,7 +3,7 @@ import IssueCard from "./IssueCard";
 
 const columnAccents = {
   open: {
-    border: "border-yellow-500/30",
+    border: "border-yellow-500/60",
     headerColor: "text-yellow-400",
     glow: "shadow-yellow-900/20",
     dot: "bg-yellow-400",
@@ -15,7 +15,7 @@ const columnAccents = {
     ),
   },
   assigned: {
-    border: "border-indigo-500/30",
+    border: "border-indigo-500/60",
     headerColor: "text-indigo-400",
     glow: "shadow-indigo-900/20",
     dot: "bg-indigo-400",
@@ -27,7 +27,7 @@ const columnAccents = {
     ),
   },
   nonAssigned: {
-    border: "border-orange-500/30",
+    border: "border-orange-500/60",
     headerColor: "text-orange-400",
     glow: "shadow-orange-900/20",
     dot: "bg-orange-400",
@@ -39,7 +39,7 @@ const columnAccents = {
     ),
   },
   working: {
-    border: "border-blue-500/30",
+    border: "border-blue-500/60",
     headerColor: "text-blue-400",
     glow: "shadow-blue-900/20",
     dot: "bg-blue-400",
@@ -51,7 +51,7 @@ const columnAccents = {
     ),
   },
   done: {
-    border: "border-green-500/30",
+    border: "border-green-500/60",
     headerColor: "text-green-400",
     glow: "shadow-green-900/20",
     dot: "bg-green-400",
