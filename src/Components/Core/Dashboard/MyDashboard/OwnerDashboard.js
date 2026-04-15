@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
-import { getAllDetailOfOwner } from "../../../Services/Operations/ownerAPI";
+import { getAllDetailOfOwner } from "../../../../Services/Operations/ownerAPI";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 
 // ── tiny helpers ────────────────────────────────────────────────────────────
 const statusColor = {
-  Open: "text-amber-400 bg-amber-400/10 border-amber-400/30",
-  Working: "text-blue-400 bg-blue-400/10 border-blue-400/30",
-  Done: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
+  Open:     "text-amber-400 bg-amber-400/10 border-amber-400/30",
+  Assigned: "text-cyan-400 bg-cyan-400/10 border-cyan-400/30",
+  Working:  "text-blue-400 bg-blue-400/10 border-blue-400/30",
+  Done:     "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
 };
 
 const statusDot = {
-  Open: "bg-amber-400",
-  Working: "bg-blue-400",
-  Done: "bg-emerald-400",
+  Open:     "bg-amber-400",
+  Assigned: "bg-cyan-400",
+  Working:  "bg-blue-400",
+  Done:     "bg-emerald-400",
 };
 
 function StatusBadge({ status }) {
@@ -30,17 +32,17 @@ function StatusBadge({ status }) {
 // ── stat card ───────────────────────────────────────────────────────────────
 function StatCard({ label, count, sub, accent }) {
   const accents = {
-    total: "from-violet-500/20 to-violet-500/5 border-violet-500 text-violet-300",
-    open: "from-amber-500/20 to-amber-500/5 border-amber-500 text-amber-300",
-    working: "from-blue-500/20 to-blue-500/5 border-blue-500 text-blue-300",
-    done: "from-emerald-500/20 to-emerald-500/5 border-emerald-500 text-emerald-300",
+    total:    "from-violet-500/20 to-violet-500/5 border-violet-500 text-violet-300",
+    open:     "from-amber-500/20 to-amber-500/5 border-amber-500 text-amber-300",
+    assigned: "from-cyan-500/20 to-cyan-500/5 border-cyan-500 text-cyan-300",
+    working:  "from-blue-500/20 to-blue-500/5 border-blue-500 text-blue-300",
+    done:     "from-emerald-500/20 to-emerald-500/5 border-emerald-500 text-emerald-300",
   };
 
   return (
     <div
       className={`relative overflow-hidden rounded-2xl border bg-gradient-to-br p-5 ${accents[accent]}`}
     >
-      {/* decorative circle */}
       <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full opacity-10 bg-white blur-xl" />
       <p className="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">{label}</p>
       <p className="text-5xl font-black font-mono leading-none mb-2">{count}</p>
@@ -50,17 +52,18 @@ function StatCard({ label, count, sub, accent }) {
 }
 
 // ── main component ──────────────────────────────────────────────────────────
-function MyDashboard() {
+function OwnerDashboard() {
   const { token } = useSelector((state) => state.auth);
 
-  const [result, setResult] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [result, setResult]               = useState(null);
+  const [isLoading, setIsLoading]         = useState(false);
 
-  const [totalIssues, setTotalIssues] = useState(0);
-  const [openIssues, setOpenIssues] = useState(0);
+  const [totalIssues, setTotalIssues]         = useState(0);
+  const [openIssues, setOpenIssues]           = useState(0);
+  const [assignedIssues, setAssignedIssues]   = useState(0); // count only
   const [inWorkingIssues, setInWorkingIssues] = useState(0);
-  const [doneIssues, setDoneIssues] = useState(0);
-  const [assignedIssues, setAssignedIssues] = useState([]);
+  const [doneIssues, setDoneIssues]           = useState(0);
+  const [myAssignedIssues, setMyAssignedIssues] = useState([]); // issues assigned to current user
 
   // ── fetch ──────────────────────────────────────────────────────────────
   async function apiCall() {
@@ -80,30 +83,25 @@ function MyDashboard() {
   function getAllIssueCounts() {
     if (!result?.organisations?.length) return;
 
-    // flat list of all issues across all orgs & departments
     const allIssues = result.organisations.flatMap((org) =>
       org.departments.flatMap((dept) => dept.issues)
     );
 
     setTotalIssues(allIssues.length);
     setOpenIssues(allIssues.filter((i) => i.status === "Open").length);
+    setAssignedIssues(allIssues.filter((i) => i.status === "Assigned").length);
     setInWorkingIssues(allIssues.filter((i) => i.status === "Working").length);
     setDoneIssues(allIssues.filter((i) => i.status === "Done").length);
 
-    // Issues assigned TO the current user (not created by them)
+    // Issues assigned TO the current user
     const myAssigned = allIssues.filter(
-      (i) => i.assignedTo && i.assignedTo === result._id
+      (i) => i.assignedTo !== null
     );
-    setAssignedIssues(myAssigned);
+    setMyAssignedIssues(myAssigned);
   }
 
-  useEffect(() => {
-    if (token) apiCall();
-  }, [token]);
-
-  useEffect(() => {
-    if (result) getAllIssueCounts();
-  }, [result]);
+  useEffect(() => { if (token) apiCall(); }, [token]);
+  useEffect(() => { if (result) getAllIssueCounts(); }, [result]);
 
   // ── loading skeleton ───────────────────────────────────────────────────
   if (isLoading) {
@@ -117,7 +115,6 @@ function MyDashboard() {
     );
   }
 
-  // ── null guard ─────────────────────────────────────────────────────────
   if (!result) return null;
 
   const organisations = result.organisations || [];
@@ -127,7 +124,7 @@ function MyDashboard() {
       className="min-h-screen bg-black text-slate-100 pt-14"
       style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}
     >
-      {/* subtle noise texture overlay */}
+      {/* noise texture */}
       <div
         className="pointer-events-none fixed inset-0 opacity-[0.03] z-0"
         style={{
@@ -137,7 +134,8 @@ function MyDashboard() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 pb-20 space-y-10">
-        {/* ── Header ──────────────────────────────────────────────── */}
+
+        {/* ── Header ────────────────────────────────────────────── */}
         <div className="pt-8">
           <p className="text-xs uppercase tracking-[0.3em] text-violet-400 mb-1">Overview</p>
           <h1 className="text-3xl font-black tracking-tight">
@@ -150,20 +148,22 @@ function MyDashboard() {
           <div className="mt-4 h-px bg-gradient-to-r from-violet-500/40 via-slate-700/30 to-transparent" />
         </div>
 
-        {/* ── Stat Cards ──────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard label="Total Issues" count={totalIssues} sub="Across all organisations" accent="total" />
-          <StatCard label="Open" count={openIssues} sub="Need attention" accent="open" />
-          <StatCard label="In Progress" count={inWorkingIssues} sub="Actively ongoing" accent="working" />
-          <StatCard label="Completed" count={doneIssues} sub="Resolved issues" accent="done" />
+        {/* ── Stat Cards (5 cards: 2 cols mobile → 3 cols md → 5 cols lg) ── */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <StatCard label="Total"       count={totalIssues}    sub="Across all organisations" accent="total"    />
+          <StatCard label="Open"        count={openIssues}     sub="Need attention"            accent="open"     />
+          <StatCard label="Assigned"    count={assignedIssues} sub="Queued, not started"       accent="assigned" />
+          <StatCard label="In Progress" count={inWorkingIssues} sub="Actively ongoing"         accent="working"  />
+          <StatCard label="Completed"   count={doneIssues}     sub="Resolved issues"           accent="done"     />
         </div>
 
-        {/* ── Body Grid ───────────────────────────────────────────── */}
+        {/* ── Body Grid ─────────────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
           {/* Left: Assigned Issues + Organisations */}
           <div className="lg:col-span-2 space-y-6">
 
-            {/* Assigned Issues */}
+            {/* My Assigned Issues */}
             <section className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur p-5">
               <div className="flex items-center justify-between mb-4">
                 <div>
@@ -171,11 +171,11 @@ function MyDashboard() {
                   <p className="text-xs text-slate-500">Issues assigned to you across all organisations</p>
                 </div>
                 <span className="text-xs font-mono bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700">
-                  {assignedIssues.length}
+                  {myAssignedIssues.length}
                 </span>
               </div>
 
-              {assignedIssues.length === 0 ? (
+              {myAssignedIssues.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-10 text-slate-600">
                   <svg className="w-10 h-10 mb-3 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
@@ -185,7 +185,7 @@ function MyDashboard() {
                 </div>
               ) : (
                 <ul className="space-y-2">
-                  {assignedIssues.map((issue) => (
+                  {myAssignedIssues.map((issue) => (
                     <li key={issue._id}
                       className="flex items-start justify-between gap-4 rounded-xl p-3 bg-slate-800/50 border border-slate-700/50 hover:border-slate-600 transition-colors">
                       <div>
@@ -224,16 +224,13 @@ function MyDashboard() {
                         </span>
                       </div>
 
-                      {/* Department pills */}
                       {org.departments?.length > 0 && (
                         <div className="mt-3 ml-4 flex flex-wrap gap-1.5">
                           {org.departments.map((dept) => (
                             <span key={dept._id}
                               className="text-[11px] text-slate-400 bg-slate-700/60 border border-slate-600/50 px-2.5 py-0.5 rounded-full">
                               {dept.title}
-                              <span className="ml-1.5 text-slate-500">
-                                {dept.issues?.length ?? 0}
-                              </span>
+                              <span className="ml-1.5 text-slate-500">{dept.issues?.length ?? 0}</span>
                             </span>
                           ))}
                         </div>
@@ -245,14 +242,8 @@ function MyDashboard() {
             </section>
           </div>
 
-          {/* Right: All Issues list */}
+          {/* Right: Pending + Recent Issues */}
           <div className="space-y-6">
-
-            {/* Pending Requests placeholder */}
-            <section className="rounded-2xl border border-dashed border-slate-700 bg-slate-900/30 p-5">
-              <h2 className="font-bold text-slate-400 mb-1">Pending Requests</h2>
-              <p className="text-xs text-slate-600">No pending requests at this time.</p>
-            </section>
 
             <section className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur p-5">
               <h2 className="font-bold text-slate-100 mb-1">Recent Issues</h2>
@@ -289,4 +280,4 @@ function MyDashboard() {
   );
 }
 
-export default MyDashboard;
+export default OwnerDashboard;

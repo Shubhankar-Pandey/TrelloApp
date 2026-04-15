@@ -2,11 +2,15 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { getAllRequestCameToMe } from "../../../Services/Operations/requestAPI";
+import { acceptRequest, getAllRequestCameToMe, rejectRequest } from "../../../Services/Operations/requestAPI";
 import { getAllDetailOfOwner } from "../../../Services/Operations/ownerAPI";
 import PendingRequestCard from "./PendingRequestCard"; // 
 import SendRequestForm from "./SendRequestForm";       
 import { getAllEmployees } from "../../../Services/Operations/employeeAPI";
+
+
+
+
 
 function Requests() {
   const { token } = useSelector((state) => state.auth);
@@ -76,20 +80,46 @@ function Requests() {
 
   // ─── Handlers (TODO: fill in API calls) ──────────────────────────────────
   async function handleAccept(requestId) {
-    // TODO: call acceptRequest(token, requestId)
-    // then refresh: fetchPendingRequests()
     console.log("Accept request:", requestId);
+    const toastId = toast.loading("Loading...");
+    try{
+      const response = await acceptRequest(token, requestId);
+      if(!response || !response.success){
+        toast.error("Failed");
+        return;
+      }
+    }
+    catch(error){
+      console.log(error);
+      toast.error(error.message);
+    }    
+    finally{
+      toast.dismiss(toastId);
+    }
   }
 
   async function handleReject(requestId) {
-    // TODO: call rejectRequest(token, requestId)
-    // then refresh: fetchPendingRequests()
     console.log("Reject request:", requestId);
+    const toastId = toast.loading("Loading...");
+    try{
+      const response = await rejectRequest(token, requestId);
+      if(!response || !response.success){
+        toast.error("Failed");
+        return;
+      }
+    }
+    catch(error){
+      console.log(error);
+      toast.error(error.message);
+    }    
+    finally{
+      toast.dismiss(toastId);
+    }
   }
 
   async function handleSendRequest({ to, issueId, message }) {
-    // TODO: call sendRequest(token, { to, issueId, message })
     console.log("Send request:", { to, issueId, message });
+
   }
 
   const isLoading = loadingRequests || loadingOwnerData;

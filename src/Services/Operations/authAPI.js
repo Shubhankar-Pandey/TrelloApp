@@ -41,10 +41,10 @@ export const sendOtp = async(email, navigate) => {
 
 
 export const signup = async(password, confirmPassword, otp,  firstName, lastName, email, role, navigate) => {
-    console.log("reached in sign services");
+    // console.log("reached in sign services");
     const toastId = toast.loading("Loading...");
     try{
-        console.log(password, " ", confirmPassword, " ", role, " ", otp, " ", email);
+        // console.log(password, " ", confirmPassword, " ", role, " ", otp, " ", email);
         const response = await apiConnector("POST", SIGNUP_API, {
             password,
             confirmPassword,
@@ -54,7 +54,7 @@ export const signup = async(password, confirmPassword, otp,  firstName, lastName
             otp,
             email
         })
-        console.log("signup api response : ", response);
+        // console.log("signup api response : ", response);
         if(!response.data.success){
             throw new Error(response.data.message);
         }
@@ -72,11 +72,11 @@ export const signup = async(password, confirmPassword, otp,  firstName, lastName
 
 
 export const login = async(email, password, navigate, dispatch) => {
-    console.log("reached login service : ", email , " ", password);
+    // console.log("reached login service : ", email , " ", password);
     const toastId = toast.loading("Loading...");
     try{
         const response = await apiConnector("POST", LOGIN_API, {email, password});
-        console.log("login api response : ", response);
+        // console.log("login api response : ", response);
         if(!response.data.success){
             throw new Error(response.data.message);
         }

@@ -4,13 +4,17 @@ const router = express.Router();
 
 
 // import controller
-const {getAllEmployees} = require("../Controllers/Employee");
-const {auth, isOwner} = require("../Middlewares/Auth");
+const {getAllEmployees, getAllDetailsOfEmployee} = require("../Controllers/Employee");
+const {auth, isOwner, isEmployee} = require("../Middlewares/Auth");
+
+
 
 
 
 // map controller 
 router.get("/getAllEmployees", auth, isOwner, getAllEmployees);
+router.get("/getAllDetailsOfEmployee", auth, isEmployee, getAllDetailsOfEmployee);
+
 
 
 

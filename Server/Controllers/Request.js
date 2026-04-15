@@ -189,7 +189,20 @@ exports.sendRequestByEmployee = async(req, res) => {
         if(!organisationExist){
             return res.status(404).json({
                 success : false,
-                message : "No such issue found",
+                message : "Not found",
+            })
+        }
+
+
+        const existIssue = await Issue.findOne({
+            _id : issueId,
+            assignedTo : null,
+        })
+
+        if(!existIssue){
+            return res.status(404).json({
+                success : false,
+                message : "Either issue not found or this issue is already assigned to someone",
             })
         }
 
@@ -206,6 +219,8 @@ exports.sendRequestByEmployee = async(req, res) => {
                 message: "Request already sent",
             });
         }
+
+
 
         const newRequest = await Request.create({
             from : userId,
@@ -227,6 +242,114 @@ exports.sendRequestByEmployee = async(req, res) => {
         return res.status(500).json({
             success : false,
             message : error.message,
+        })
+    }
+}
+
+
+exports.acceptRequest = async(req, res) => {
+    try{
+        const {requestId} = req.body;
+        if(!requestId){
+            return res.status(400).json({
+                success : false, 
+                message : "Data missing, bad request",
+            })
+        }
+
+        const existRequest = await Request.findByIdAndUpdate(requestId, {
+            status : "Accepted",
+        });
+
+        if(!existRequest){
+            return res.status(404).json({
+                success : false, 
+                message : "Request not found",
+            })
+        }
+
+        const issueId = existRequest.issue;
+
+        let employeeId;
+
+        if(req.user.role === "Owner"){
+            employeeId = existRequest.from;
+        }
+        else{
+            employeeId = existRequest.to;
+        }
+
+        const existIssue = await Issue.findByIdAndUpdate(issueId, {
+            assignedTo : employeeId,
+            status : "Assigned",
+        })
+
+        if(!existIssue){
+            return res.status(404).json({
+                success : false, 
+                message : "Issue not found",
+            })
+        }
+
+        const existUser = await User.findByIdAndUpdate(employeeId, {
+            $push : {
+                assignedIssues : issueId,
+            }
+        })
+
+        if(!existUser){
+            return res.status(404).json({
+                success : false, 
+                message : "User not found",
+            })
+        }
+
+        return res.status(200).json({
+            success : true, 
+            message : "Request Accepted",
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false, 
+            message : "Internal Server Error",
+        })
+    }
+}
+
+
+exports.rejectRequest = async(req, res) => {
+    try{
+        const {requestId} = req.body;
+        if(!requestId){
+            return res.status(400).json({
+                success : false, 
+                message : "Data missing, bad request",
+            })
+        }
+
+        const existRequest = await Request.findByIdAndUpdate(requestId, {
+            status : "Rejected",
+        });
+
+        if(!existRequest){
+            return res.status(404).json({
+                success : false, 
+                message : "Request not found",
+            })
+        }
+
+        return res.status(200).json({
+            success : true, 
+            message : "Request Accepted",
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false, 
+            message : "Internal Server Error",
         })
     }
 }

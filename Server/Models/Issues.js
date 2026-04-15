@@ -21,7 +21,7 @@ const issuesSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["Open", "Working", "Done"],
+        enum: ["Open", "Assigned", "Working", "Done"],
         default: "Open",
     },
     userId: {

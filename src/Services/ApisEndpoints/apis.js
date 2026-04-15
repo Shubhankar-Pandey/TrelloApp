@@ -41,10 +41,15 @@ export const owner_endPoints = {
 // employee end points
 export const employee_endPoints = {
   GET_ALL_EMPLOYEES : BASE_URL + "/employee/getAllEmployees",
+  GET_ALL_DETAILS_OF_EMPLOYEE : BASE_URL + "/employee/getAllDetailsOfEmployee",
 }
 
 
 // request end points
 export const request_endPoints = {
-  GET_ALL_REQUEST_CAME_TO_ME : BASE_URL + "/request/getAllRequestCameToMe"
+  GET_ALL_REQUEST_CAME_TO_ME : BASE_URL + "/request/getAllRequestCameToMe",
+  ACCEPT_REQUEST : BASE_URL + "/request/acceptRequest",
+  REJECT_REQUEST : BASE_URL + "/request/rejectRequest",
+  SEND_REQUEST_BY_OWNER : BASE_URL + "/request/sendRequestByOwner",
+  SEND_REQUEST_BY_EMPLOYEE : BASE_URL + "/request/sendRequestByEmployee",
 }

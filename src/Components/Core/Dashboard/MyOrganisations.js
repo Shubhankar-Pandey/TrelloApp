@@ -74,9 +74,9 @@ function MyOrganisations() {
           {/* New Org button */}
           <button onClick={handleOnClick}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl
-                       bg-cyan-500 hover:bg-cyan-400 active:scale-95
-                       text-slate-900 font-bold text-sm
-                       shadow-lg shadow-cyan-500/20 transition-all duration-150"
+                       bg-indigo-600 hover:bg-indigo-700 active:scale-95
+                       text-white text-sm
+                       transition-all duration-150 border-2 border-white"
           >
             <FaPlus className="text-xs" />
             New Organisation
@@ -137,9 +137,9 @@ function MyOrganisations() {
             </div>
             <h3 className="text-lg font-bold text-slate-400 mb-1">No organisations yet</h3>
             <p className="text-slate-600 text-sm mb-6">Create your first organisation to get started</p>
-            <button
+            <button onClick={handleOnClick}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl
-                         bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold text-sm
+                         bg-indigo-600 hover:bg-indigo-700 text-slate-900 font-bold text-sm
                          shadow-lg shadow-cyan-500/20 transition-all"
             >
               <FaPlus className="text-xs" />

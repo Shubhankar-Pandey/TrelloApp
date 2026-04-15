@@ -94,7 +94,7 @@ function CreationBoard() {
 
     // ── Submit Handlers ─────────────────────────────────────────
     async function handleOrgSubmit(data) {
-        console.log("Org Form Data:", data);
+        // console.log("Org Form Data:", data);
         setLoading(true);
         try{
             const response = await createOrganisation(token, data.title, data.description, data.privacy);
@@ -115,7 +115,7 @@ function CreationBoard() {
     }
 
     async function handleDeptSubmit(data) {
-        console.log("Dept Form Data:", data);
+        // console.log("Dept Form Data:", data);
         setLoading(true);
         try{
             const response = await createDepartment(token, data.title, data.description, data.privacy, data.organisationId);
@@ -138,7 +138,7 @@ function CreationBoard() {
 
 
     async function handleIssueSubmit(data) {
-        console.log("Issue Form Data:", data);
+        // console.log("Issue Form Data:", data);
         setLoading(true);
         try{
             const response = await createIssue(token, data.title, data.description, data.privacy, data.departmentId, data.organisationId);

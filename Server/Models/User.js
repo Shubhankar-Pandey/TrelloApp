@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
             ref : "Organisation",
         }
     ],
+    assignedIssues : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Issue",
+        }
+    ],
     resetPasswordToken : {
         type : String,
     },
