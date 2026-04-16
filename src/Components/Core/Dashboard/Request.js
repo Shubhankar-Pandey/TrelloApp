@@ -88,6 +88,8 @@ function Requests() {
         toast.error("Failed");
         return;
       }
+      toast.success("Request Accepted");
+      fetchPendingRequests();
     }
     catch(error){
       console.log(error);
@@ -107,6 +109,8 @@ function Requests() {
         toast.error("Failed");
         return;
       }
+      toast.success("Request Rejected");
+      fetchPendingRequests();
     }
     catch(error){
       console.log(error);

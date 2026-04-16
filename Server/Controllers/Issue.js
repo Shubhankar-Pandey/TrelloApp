@@ -144,3 +144,66 @@ exports.getAllPublicIssueDetails = async(req, res) => {
         })
     }
 }
+
+
+
+
+
+exports.updateIssueStatus = async(req, res) => {
+    try{
+        const {issueId} = req.body;
+        if(!issueId){
+            return res.status(400).json({
+                success : false, 
+                message : "Bad request",
+            })
+        }
+
+        const existIssue = await Issue.findById(issueId);
+        if(!existIssue){
+            return res.status(404).json({
+                success : false, 
+                message : "Issue not found",
+            })
+        }
+
+        if(existIssue.status === "Open"){
+            return res.status(403).json({
+                success : false, 
+                message : "This issue is not in assigned state",
+            })
+        }
+
+        if(existIssue.status === "Done"){
+            return res.status(403).json({
+                success : false, 
+                message : "This issue is already in done state",
+            })
+        }
+
+        const currentState = existIssue.status;
+        let nextState;
+        if(currentState === "Assigned"){
+            nextState = "Working";
+        }
+        else if(currentState === "Working"){
+            nextState = "Done";
+        }
+
+        await Issue.findByIdAndUpdate(issueId, {
+            status : nextState,
+        })
+
+        return res.status(200).json({
+            success : true, 
+            message : "State update successfully",
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error",
+        })
+    }
+}

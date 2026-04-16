@@ -5,6 +5,7 @@ import {toast} from "react-hot-toast"
 const {
     GET_ALL_PUBLIC_ISSUE_DETAILS,
     CREATE_ISSUE,
+    UPDATE_ISSUE_STATUS,
 } = issue_endPoints;
 
 
@@ -39,6 +40,30 @@ export const createIssue = async(token, title, description, privacy, departmentI
             return null;
         }
         return response;
+    }
+    catch(error){
+        console.log(error);
+        toast.error(error.message);
+    }
+}
+
+
+
+export const updateIssueStatus = async(token, issueId) => {
+    try{
+        console.log("hit ", token, " ", issueId);
+        const response = await apiConnector("POST", UPDATE_ISSUE_STATUS, {
+            issueId
+        },
+        {
+            Authorization : `Bearer ${token}`
+        })
+        console.log("response = ", response);
+        if(!response || !response.data.message){
+            toast.error("Somthing went wrong");
+            return null;
+        }
+        return response.data;
     }
     catch(error){
         console.log(error);

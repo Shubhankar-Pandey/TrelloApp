@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { getAllDetailOfOwner } from "../../../Services/Operations/ownerAPI";
-import IssueColumn from "./IssueColumn";
+import { getAllDetailOfOwner } from "../../../../Services/Operations/ownerAPI";
+import IssueColumn from "../IssueColumn";
 
 const STATUS_META = [
   { key: "open",     label: "Open",     status: "Open",     dot: "bg-amber-400",   text: "text-amber-400",   badge: "bg-amber-400/10 border-amber-400/20"   },
@@ -12,7 +12,7 @@ const STATUS_META = [
   { key: "done",     label: "Done",     status: "Done",     dot: "bg-emerald-400", text: "text-emerald-400", badge: "bg-emerald-400/10 border-emerald-400/20" },
 ];
 
-function IssueTracker() {
+function IssueTrackerOwner() {
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
 
@@ -168,4 +168,4 @@ function IssueTracker() {
   );
 }
 
-export default IssueTracker;
+export default IssueTrackerOwner;

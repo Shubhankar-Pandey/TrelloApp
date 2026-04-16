@@ -23,6 +23,7 @@ export const organisation_endPoints = {
 export const issue_endPoints = {
   GET_ALL_PUBLIC_ISSUE_DETAILS : BASE_URL + "/organisation/department/issue/getAllPublicIssueDetails",
   CREATE_ISSUE : BASE_URL + "/organisation/department/issue/createIssue",
+  UPDATE_ISSUE_STATUS : BASE_URL + "/organisation/department/issue/updateIssueStatus",
 }
 
 

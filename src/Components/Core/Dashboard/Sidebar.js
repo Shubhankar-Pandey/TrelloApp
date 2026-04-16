@@ -16,8 +16,7 @@ const OWNER_LINKS = [
 
 const EMPLOYEE_LINKS = [
   { label: "My Dashboard",  to: "/myDashboard"    },
-  { label: "My Issues",     to: "/employeeIssues"       },
-  { label: "Issue Tracker", to: "/employeeIssueTracker" },
+  { label: "Issue Tracker", to: "/issueTracker" },
   { label: "Requests",      to: "/requests"             },
   { label: "Settings",      to: "/settings"             },
 ];
