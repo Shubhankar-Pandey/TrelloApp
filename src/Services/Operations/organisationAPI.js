@@ -7,11 +7,11 @@ import {organisation_endPoints} from "../ApisEndpoints/apis"
 const {
     GET_ALL_ORG,
     CREATE_ORG,
+    GET_ALL_PUBLIC_OPEN_ISSUES,
 } = organisation_endPoints
 
 
 export const getAllOrganisations = async() => {
-    // console.log("Reached in getAllOrganisations service");
     try{
         const response = await apiConnector("GET", GET_ALL_ORG);
         if(!response.data.success){
@@ -47,6 +47,24 @@ export const createOrganisation = async(token, title, description, privacy) => {
     catch(error){
         console.log(error);
         toast.error("Something went wrong while creating organisation");
+    }
+}
+
+
+
+export const getAllPublicOpenIssues = async(token) => {
+    try{
+        const response = await apiConnector("GET", GET_ALL_PUBLIC_OPEN_ISSUES, null,
+            {Authorization : `Bearer ${token}`}
+        )
+        if(!response || !response.data.success){
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    }
+    catch(error){
+        console.log(error);
+        toast.error("Error while fetching issues");
     }
 }
 

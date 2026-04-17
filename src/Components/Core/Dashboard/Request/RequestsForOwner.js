@@ -2,17 +2,17 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { acceptRequest, getAllRequestCameToMe, rejectRequest } from "../../../Services/Operations/requestAPI";
-import { getAllDetailOfOwner } from "../../../Services/Operations/ownerAPI";
+import { acceptRequest, getAllRequestCameToMe, rejectRequest } from "../../../../Services/Operations/requestAPI";
+import { getAllDetailOfOwner } from "../../../../Services/Operations/ownerAPI";
 import PendingRequestCard from "./PendingRequestCard"; // 
-import SendRequestForm from "./SendRequestForm";       
-import { getAllEmployees } from "../../../Services/Operations/employeeAPI";
+import SendRequestForm from "./SendRequestFormForOwner";       
+import { getAllEmployees } from "../../../../Services/Operations/employeeAPI";
+import { sendRequestByOwner } from "../../../../Services/Operations/requestAPI";
 
 
 
 
-
-function Requests() {
+function RequestsForOwner() {
   const { token } = useSelector((state) => state.auth);
 
   const [loadingRequests, setLoadingRequests] = useState(false);
@@ -121,9 +121,22 @@ function Requests() {
     }
   }
 
-  async function handleSendRequest({ to, issueId, message }) {
-    console.log("Send request:", { to, issueId, message });
-
+  async function handleSendRequest({ to, issueId, message, organisationId, departmentId }) {
+    const toastId = toast.loading("Loading...");
+    try{
+      const response = await sendRequestByOwner(token, to, issueId, message, organisationId, departmentId);
+      if(!response || !response.success){
+        toast.dismiss(toastId);
+        toast.error("Request failed");
+        return;
+      }
+      toast.dismiss(toastId);
+      toast.success("Request sent successfully");
+    }
+    catch(error){
+      toast.dismiss(toastId);
+      toast.error("Request failed");
+    }
   }
 
   const isLoading = loadingRequests || loadingOwnerData;
@@ -230,4 +243,4 @@ function Requests() {
   );
 }
 
-export default Requests;
+export default RequestsForOwner;

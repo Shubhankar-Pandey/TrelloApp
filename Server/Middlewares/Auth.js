@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 exports.auth = async(req, res, next) => {
     try{
-        // console.log("reached in auth middleware");
+        // console.log("reached in auth middleware ");
         const token = req.header("Authorization").replace("Bearer ", "");
         // console.log("token : ", token);
         if(!token){
@@ -59,7 +59,7 @@ exports.isOwner = async(req, res, next) => {
 
 
 exports.isEmployee = async(req, res, next) => {
-    // console.log("reached in isOwner middleware");
+    // console.log("reached in isEmployee middleware");
     try{
         const {role} = req.user;
         if(!role){

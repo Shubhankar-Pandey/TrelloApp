@@ -1,7 +1,7 @@
 // components/SendRequestForm.jsx
 import { useState } from "react";
 
-function SendRequestForm({ employees, ownerData, onSendRequest }) {
+function SendRequestFormForOwner({ employees, ownerData, onSendRequest }) {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState("");
   const [selectedOrgId, setSelectedOrgId] = useState("");
   const [selectedDeptId, setSelectedDeptId] = useState("");
@@ -37,6 +37,8 @@ function SendRequestForm({ employees, ownerData, onSendRequest }) {
       to: selectedEmployeeId,
       issueId: selectedIssueId,
       message,
+      organisationId: selectedOrgId,
+      departmentId: selectedDeptId,
     });
   }
 
@@ -187,4 +189,4 @@ function SendRequestForm({ employees, ownerData, onSendRequest }) {
   );
 }
 
-export default SendRequestForm;
+export default SendRequestFormForOwner;

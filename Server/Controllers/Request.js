@@ -169,6 +169,7 @@ exports.sendRequestByEmployee = async(req, res) => {
         }
 
         const userExist = await User.findById(userId);
+
         if(!userExist){
             return res.status(404).json({
                 success : false,
@@ -193,25 +194,25 @@ exports.sendRequestByEmployee = async(req, res) => {
             })
         }
 
-
         const existIssue = await Issue.findOne({
             _id : issueId,
             assignedTo : null,
         })
-
+        
         if(!existIssue){
             return res.status(404).json({
                 success : false,
                 message : "Either issue not found or this issue is already assigned to someone",
             })
         }
-
+        console.log("issue Exist 1");
         const alreadyExists = await Request.findOne({
             from: userId,
             to : organisationExist.ownerId,
             issue: issueId,
             status: "Pending"
         });
+        console.log("issue Exist 2");
 
         if (alreadyExists) {
             return res.status(400).json({
@@ -220,7 +221,7 @@ exports.sendRequestByEmployee = async(req, res) => {
             });
         }
 
-
+        console.log("issue Exist 3");
 
         const newRequest = await Request.create({
             from : userId,

@@ -3,7 +3,6 @@ const User = require("../Models/User");
 
 
 
-
 exports.createOrganisation = async(req, res) => {
     try{
         const {title, description, privacy} = req.body;
@@ -85,6 +84,55 @@ exports.getAllOrganisationsAndItsDepartments = async(req, res) => {
         return res.status(500).json({
             success : false,
             message : "Internal Server error",
+        })
+    }
+}
+
+
+
+exports.getAllPublicOpenIssues = async(req, res) => {
+    try{
+        // console.log("reached in controller");
+        const issues = await Organisation.find(
+            {
+                privacy : "Public",
+            }
+        )
+        .select("title description")
+        .populate([
+            {
+                path : "departments",
+                match : {
+                    privacy : "Public",
+                },
+                select : "title description",
+                populate : {
+                    path : "issues",
+                    match : {
+                        privacy : "Public",
+                        status : "Open",
+                        assignedTo : null,
+                    },
+                    select : "title description",
+                }
+            },
+            {
+                path : "ownerId",
+                select : "firstName lastName"
+            }
+        ]).exec();
+
+        return res.status(200).json({
+            success : true, 
+            message : "Issues fetched successfully",
+            data : issues,
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false, 
+            message : "Internal server error",
         })
     }
 }

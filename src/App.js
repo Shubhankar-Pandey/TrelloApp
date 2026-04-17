@@ -17,7 +17,7 @@ import AllPublicIssues from "./Pages/AllPublicIssues";
 import CreationBoard from "./Pages/CreationBoard";
 import MyIssue from "./Components/Core/Dashboard/MyIssue";
 import IssueTracker from "./Components/Core/Dashboard/IssueTracker/IssueTracker";
-import Request from "./Components/Core/Dashboard/Request";
+import Request from "./Components/Core/Dashboard/Request/Request";
 
 function App() {
   return (

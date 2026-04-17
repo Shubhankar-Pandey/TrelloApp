@@ -10,6 +10,7 @@ const {
     ACCEPT_REQUEST, 
     REJECT_REQUEST,
     SEND_REQUEST_BY_OWNER,
+    SEND_REQUEST_BY_EMPLOYEE,
 } = request_endPoints;
 
 
@@ -70,21 +71,42 @@ export const rejectRequest = async(token, requestId) => {
 }
 
 
-// export const sendRequestByOwner = async(token) => {
-//     try{
-//         const response = await apiConnector("POST", SEND_REQUEST_BY_OWNER, {}, 
-//             {Authorization : `Bearer ${token}`}
-//         )
-//         if(!response || !response.data.success){
-//             toast.error("Failed in accepting request");
-//             return;
-//         }
-//         return response.data;
-//     }
-//     catch(error){
-//         console.log(error);
-//         toast.error(error.message);
-//     }
-// }
+export const sendRequestByOwner = async(token, to, issueId, message, organisationId, departmentId) => {
+    try{
+        const response = await apiConnector("POST", SEND_REQUEST_BY_OWNER, 
+            {to, issueId, message, organisationId, departmentId}, 
+            {Authorization : `Bearer ${token}`}
+        )
+        if(!response || !response.data.success){
+            toast.error("Failed in accepting request");
+            return;
+        }
+        return response.data;
+    }
+    catch(error){
+        console.log(error);
+        toast.error(error.message);
+    }
+}
+
+
+
+export const sendRequestByEmployee = async(token, organisationId, departmentId, issueId, message) => {
+    try{
+        const response = await apiConnector("POST", SEND_REQUEST_BY_EMPLOYEE, 
+            {organisationId, departmentId, issueId, message}, 
+            {Authorization : `Bearer ${token}`}
+        )
+        if(!response || !response.data.success){
+            toast.error("Failed in accepting request");
+            return;
+        }
+        return response.data;
+    }
+    catch(error){
+        console.log(error);
+        toast.error(error.message);
+    }
+}
 
 
