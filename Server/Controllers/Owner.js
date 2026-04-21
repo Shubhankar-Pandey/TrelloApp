@@ -13,7 +13,11 @@ exports.getAllDetailOfOwner = async(req, res) => {
                 populate : {
                     path : "departments",
                     populate : {
-                        path : "issues"
+                        path : "issues",
+                        populate : {
+                            path : "assignedTo",
+                            select : "firstName lastName"
+                        }
                     }
                 }
 

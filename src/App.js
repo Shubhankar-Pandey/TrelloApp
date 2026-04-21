@@ -12,7 +12,7 @@ import OrganisationsPage from "./Pages/OrganisationsPage";
 import PrivateRoute from "./Components/Common/PrivateRoute";
 import DashboardPage from "./Pages/DashboardPage";
 import MyDashboard from "./Components/Core/Dashboard/MyDashboard/MyDashboard";
-import MyOrganisations from "./Components/Core/Dashboard/MyOrganisations";
+import MyOrganisations from "./Components/Core/Dashboard/MyOrganisations/MyOrganisations";
 import AllPublicIssues from "./Pages/AllPublicIssues";
 import CreationBoard from "./Pages/CreationBoard";
 import MyIssue from "./Components/Core/Dashboard/MyIssue";

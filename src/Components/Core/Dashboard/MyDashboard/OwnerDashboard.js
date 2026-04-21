@@ -150,7 +150,7 @@ function OwnerDashboard() {
 
         {/* ── Stat Cards (5 cards: 2 cols mobile → 3 cols md → 5 cols lg) ── */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          <StatCard label="Total"       count={totalIssues}    sub="Across all organisations" accent="total"    />
+          <StatCard label="Total"       count={totalIssues}    sub="Issues allover" accent="total"    />
           <StatCard label="Open"        count={openIssues}     sub="Need attention"            accent="open"     />
           <StatCard label="Assigned"    count={assignedIssues} sub="Queued, not started"       accent="assigned" />
           <StatCard label="In Progress" count={inWorkingIssues} sub="Actively ongoing"         accent="working"  />
@@ -168,7 +168,7 @@ function OwnerDashboard() {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h2 className="font-bold text-slate-100">My Assigned Issues</h2>
-                  <p className="text-xs text-slate-500">Issues assigned to you across all organisations</p>
+                  <p className="text-xs text-slate-500">Issues assigned by you across all organisations</p>
                 </div>
                 <span className="text-xs font-mono bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700">
                   {myAssignedIssues.length}

@@ -8,7 +8,7 @@ import { HiOutlinePlusSm } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
 
-function OrgCard({ org, index }) {
+function OrgCard({ org, index, apiCall }) {
   const departments = org.departments ?? [];
   const allIssues = departments.flatMap((d) => d.issues ?? []);
   const openCount = allIssues.filter((i) => i.status === "Open").length;
@@ -88,7 +88,7 @@ function OrgCard({ org, index }) {
               Departments ({departments.length})
             </p>
             {departments.map((dept) => (
-              <DepartmentCard key={dept._id} dept={dept} />
+              <DepartmentCard key={dept._id} dept={dept} apiCall={apiCall}/>
             ))}
           </div>
         )}

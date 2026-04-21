@@ -67,7 +67,7 @@ function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-2xl p-8 shadow-2xl shadow-black/50">
+        <div className="w-full max-w-md bg-black border border-gray-700 rounded-2xl p-8 shadow-2xl shadow-black/50">
 
           <h2 className="text-gray-100 text-xl font-semibold mb-1">
             Login to your account

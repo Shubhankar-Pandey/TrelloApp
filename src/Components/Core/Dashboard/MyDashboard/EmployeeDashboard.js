@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
 const STATUS_CONFIG = {
-  Open:     { label: "Open",     bg: "bg-blue-500/15",   text: "text-blue-400",   dot: "bg-blue-400"   },
   Assigned: { label: "Assigned", bg: "bg-amber-500/15",  text: "text-amber-400",  dot: "bg-amber-400"  },
   Working:  { label: "Working",  bg: "bg-indigo-500/15", text: "text-indigo-400", dot: "bg-indigo-400" },
   Done:     { label: "Done",     bg: "bg-emerald-500/15",text: "text-emerald-400",dot: "bg-emerald-400"},
@@ -191,7 +190,7 @@ function EmployeeDashboard() {
   const [filter, setFilter] = useState("All");
   const { token } = useSelector((state) => state.auth);
 
-  const STATUS_FILTERS = ["All", "Open", "Assigned", "Working", "Done"];
+  const STATUS_FILTERS = ["All", "Assigned", "Working", "Done"];
 
   async function fetchData() {
     setLoading(true);

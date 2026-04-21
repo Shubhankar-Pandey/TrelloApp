@@ -16,6 +16,7 @@ function MyIssue() {
     setLoading(true);
     try {
         const response = await getAllDetailOfOwner(token);
+        console.log("getAllDetailOfOwner = ", response);
         if (!response || !response?.success) {
             toast.error("Failed in fetching data");
             return;

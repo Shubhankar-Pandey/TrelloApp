@@ -76,7 +76,7 @@ function SignupPage() {
                 </div>
 
                 {/* Card */}
-                <div className='w-full max-w-lg bg-gray-900 border border-gray-700 rounded-2xl p-8 shadow-2xl shadow-black/50'>
+                <div className='w-full max-w-lg bg-black border border-gray-700 rounded-2xl p-8 shadow-2xl shadow-black/50'>
 
                     <h2 className='text-gray-100 text-xl font-semibold mb-1'>
                         Create your account
@@ -93,6 +93,7 @@ function SignupPage() {
                                 <label className='text-gray-400 text-xs uppercase'>First Name</label>
                                 <input
                                     type='text'
+                                    placeholder='First Name'
                                     {...register('firstName', { required: 'Required' })}
                                     className={inputClass(errors.firstName)}
                                 />
@@ -103,6 +104,7 @@ function SignupPage() {
                                 <label className='text-gray-400 text-xs uppercase'>Last Name</label>
                                 <input
                                     type='text'
+                                    placeholder='Last Name'
                                     {...register('lastName', { required: 'Required' })}
                                     className={inputClass(errors.lastName)}
                                 />
@@ -115,6 +117,7 @@ function SignupPage() {
                             <label className='text-gray-400 text-xs uppercase'>Email</label>
                             <input
                                 type='email'
+                                placeholder='Email'
                                 {...register('email', { required: 'Email required' })}
                                 className={inputClass(errors.email)}
                             />
@@ -126,6 +129,7 @@ function SignupPage() {
                             <label className='text-gray-400 text-xs uppercase'>Password</label>
                             <input
                                 type='password'
+                                placeholder='Password'
                                 {...register('password', { required: 'Password required' })}
                                 className={inputClass(errors.password)}
                             />
@@ -137,6 +141,7 @@ function SignupPage() {
                             <label className='text-gray-400 text-xs uppercase'>Confirm Password</label>
                             <input
                                 type='password'
+                                placeholder='Confirm password'
                                 {...register('confirmPassword', {
                                     required: 'Confirm password',
                                     validate: (value) =>
@@ -154,7 +159,7 @@ function SignupPage() {
                                 {['Owner', 'Employee'].map((role) => (
                                     <label
                                         key={role}
-                                        className={`p-4 rounded-xl border cursor-pointer transition-all
+                                        className={`p-4 rounded-xl border cursor-pointer transition-all flex gap-x-2
                                         ${watch('role') === role
                                             ? 'border-indigo-500 bg-indigo-500/10 ring-1 ring-indigo-500/30'
                                             : 'border-gray-700 bg-gray-800 hover:border-gray-600'}`}
@@ -163,7 +168,7 @@ function SignupPage() {
                                             type='radio'
                                             value={role}
                                             {...register('role')}
-                                            className='hidden'
+                                            // className='hidden'
                                         />
                                         <p className={`text-sm font-medium ${
                                             watch('role') === role ? 'text-indigo-300' : 'text-gray-400'

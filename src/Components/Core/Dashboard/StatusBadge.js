@@ -1,6 +1,10 @@
 
 
 const STATUS_STYLES = {
+  Assigned : {
+    pill : "text-green-400 bg-green-200/5 border-green-700",
+    dot : "bg-green-500"
+  },
   Open: {
     pill: "bg-amber-400/10 text-amber-300 border-amber-400/25",
     dot: "bg-amber-400",

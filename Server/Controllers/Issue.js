@@ -1,7 +1,7 @@
 const Department = require("../Models/Department");
 const Issue = require("../Models/Issues");
 const Organisation = require("../Models/Organisations")
-
+const User = require("../Models/User");
 
 
 exports.createIssue = async(req, res) => {
@@ -76,6 +76,59 @@ exports.createIssue = async(req, res) => {
             message : "Issue created successfully",
             newIssue,
             updatedDepartment,
+        })
+
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false, 
+            message : "Internal Server error",
+        })
+    }
+}
+
+
+
+exports.deleteIssue = async(req, res) => {
+    try{
+        const {issueId} = req.body;
+        if(!issueId){
+            return res.status(400).json({
+                success : false, 
+                message : "IssueId is missing",
+            })
+        }
+
+        const existIssue = await Issue.findById(issueId);
+        if(!existIssue){
+            return res.status(404).json({
+                success : false, 
+                meassage : "Issue not found",
+            })
+        }
+
+        await Issue.findByIdAndDelete(issueId);
+
+        const departmentId = existIssue.departmentId;
+        await Department.findByIdAndUpdate(departmentId, {
+            $pull : {
+                issues : issueId,
+            }
+        })
+
+        const employeeId = existIssue.assignedTo;
+        if(employeeId != null){
+            await User.findByIdAndUpdate(employeeId, {
+                $pull : {
+                    assignedIssues : issueId,
+                }
+            })
+        }
+
+        return res.status(200).json({
+            success : true, 
+            message : "Issue deleted successfully",
         })
 
     }

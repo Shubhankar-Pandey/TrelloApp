@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getAllDetailOfOwner } from "../../../Services/Operations/ownerAPI";
+import { getAllDetailOfOwner } from "../../../../Services/Operations/ownerAPI";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import OrgCard from "./OrgCard";
@@ -152,7 +152,7 @@ function MyOrganisations() {
         {!isLoading && organisations.length > 0 && (
           <div className="space-y-5">
             {organisations.map((org, index) => (
-              <OrgCard key={org._id} org={org} index={index} />
+              <OrgCard key={org._id} org={org} index={index} apiCall = {apiCall}/>
             ))}
           </div>
         )}

@@ -68,7 +68,7 @@ exports.sendOtp = async(req, res) => {
 
 exports.signup = async(req, res) => {
     try{
-        console.log("reached in signup controller in server : ", req.body);
+        // console.log("reached in signup controller in server : ", req.body);
         const {password, confirmPassword, firstName, lastName, role, otp} = req.body;
         let {email} = req.body;
         
@@ -96,7 +96,7 @@ exports.signup = async(req, res) => {
             });
         }
 
-        console.log("before finding userExist");
+        // console.log("before finding userExist");
         const userExist = await User.findOne({email});
         if(userExist){
             return res.status(403).json({
@@ -105,7 +105,7 @@ exports.signup = async(req, res) => {
             })
         }
 
-        console.log("before otp checking");
+        // console.log("before otp checking");
         const compareOtp = await Otp.findOne({email});
         if(!compareOtp || otp !== compareOtp.otp){
             return res.status(400).json({
@@ -114,10 +114,10 @@ exports.signup = async(req, res) => {
             });
         }
 
-        console.log("before password hashing");
+        // console.log("before password hashing");
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        console.log("before user creation");
+        // console.log("before user creation");
         await User.create({
             email,
             password : hashedPassword,
@@ -125,7 +125,7 @@ exports.signup = async(req, res) => {
             lastName,
             role,
         })
-        console.log("after user creation");
+        // console.log("after user creation");
 
         return res.status(200).json({
             success : true,

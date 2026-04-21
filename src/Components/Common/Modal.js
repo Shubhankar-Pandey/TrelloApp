@@ -6,7 +6,7 @@ function Modal({ text1, text2, button1text, button2text, button1handler, button2
             onClick={button1handler}
         >
             <div
-                className='relative w-full max-w-sm mx-4 bg-[#0d0d0d] border border-white/10 rounded-2xl p-6 shadow-2xl shadow-black/60'
+                className='relative w-full max-w-sm mx-4 bg-slate-900 border border-white rounded-2xl p-6 shadow-2xl shadow-black/60'
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Heading */}
