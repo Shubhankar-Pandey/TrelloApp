@@ -5,12 +5,20 @@ import { useNavigate, Link } from 'react-router-dom';
 import { sendOtp } from '../Services/Operations/authAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setSignupData } from '../Redux/authSlice';
+import { IoEye } from "react-icons/io5";
+import { IoMdEyeOff } from "react-icons/io";
+import { useState } from 'react';
+
 
 function SignupPage() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading } = useSelector((state) => state.auth);
+    const [passwordVisible, setPasswordVisibe] = useState(false);
+    const [cnfPasswordVisible, setCnfPasswordVisible] = useState(false);
+
+
 
     const {
         register,
@@ -125,22 +133,27 @@ function SignupPage() {
                         </div>
 
                         {/* Password */}
-                        <div>
+                        <div className='relative'>
                             <label className='text-gray-400 text-xs uppercase'>Password</label>
                             <input
-                                type='password'
+                                type={passwordVisible === false ? "password" : "text"}
                                 placeholder='Password'
                                 {...register('password', { required: 'Password required' })}
                                 className={inputClass(errors.password)}
                             />
+                            {
+                                passwordVisible === false ? 
+                                <button type='button' onClick={()=>setPasswordVisibe(true)}> <IoEye className='absolute text-2xl text-white right-4 top-9'/>  </button>
+                                : <button type='button' onClick={()=>setPasswordVisibe(false)}> <IoMdEyeOff className='absolute text-2xl text-white right-4 top-9'/> </button>
+                            }
                             {errors.password && <p className='text-red-400 text-xs'>{errors.password.message}</p>}
                         </div>
 
                         {/* Confirm Password */}
-                        <div>
+                        <div className='relative'>
                             <label className='text-gray-400 text-xs uppercase'>Confirm Password</label>
                             <input
-                                type='password'
+                                type={cnfPasswordVisible === false ? "password" : "text"}
                                 placeholder='Confirm password'
                                 {...register('confirmPassword', {
                                     required: 'Confirm password',
@@ -149,6 +162,11 @@ function SignupPage() {
                                 })}
                                 className={inputClass(errors.confirmPassword)}
                             />
+                            {
+                                cnfPasswordVisible === false ? 
+                                <button type='button' onClick={()=>setCnfPasswordVisible(true)}> <IoEye className='absolute text-2xl text-white right-4 top-9'/>  </button>
+                                : <button type='button' onClick={()=>setCnfPasswordVisible(false)}> <IoMdEyeOff className='absolute text-2xl text-white right-4 top-9'/> </button>
+                            }
                             {errors.confirmPassword && <p className='text-red-400 text-xs'>{errors.confirmPassword.message}</p>}
                         </div>
 

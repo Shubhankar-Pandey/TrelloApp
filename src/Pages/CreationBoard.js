@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getAllDetailOfOwner } from "../Services/Operations/ownerAPI";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,6 @@ import CardWrapper from "../Components/Core/CreationBoard/CardWrapper";
 import PrivacyRadio from "../Components/Core/CreationBoard/PrivacyRadio";
 import {createDepartment} from "../Services/Operations/departmentAPI";
 import {createIssue} from "../Services/Operations/issueAPI"
-
 
 
 
@@ -24,13 +23,14 @@ const errorCls = "text-red-400 text-xs mt-1";
 
 function CreationBoard() {
 
-    let { step } = useParams();
-    const currentStep = parseInt(step);
+    const location = useLocation();
+    const step = location.state?.step || 1;
+    const [currentStep, setCurrentStep] = useState(step);
     const [loading, setLoading] = useState(false);
     const { token } = useSelector((state) => state.auth);
     const [result, setResult] = useState(null);
     const navigate = useNavigate();
-
+    
 
 
     // ── React Hook Forms ────────────────────────────────────────
@@ -89,7 +89,7 @@ function CreationBoard() {
     useEffect(() => {
         if (currentStep === 1) return;
         fetchData();
-    }, [step]);
+    }, [currentStep]);
 
 
     // ── Submit Handlers ─────────────────────────────────────────
@@ -103,7 +103,7 @@ function CreationBoard() {
                 return;
             }
             toast.success("Organisation created successfully");
-            navigate(`/creationBoard/${2}`);
+            setCurrentStep(2);
         }
         catch(error){
             console.log(error);
@@ -124,7 +124,7 @@ function CreationBoard() {
                 return;
             }
             toast.success("Department created successfully");
-            navigate(`/creationBoard/${3}`);
+            setCurrentStep(3);
         }
         catch(error){
             console.log(error);
@@ -168,12 +168,30 @@ function CreationBoard() {
     ];
 
     return (
-        <div className="min-h-screen bg-black text-white py-14 px-8">
-        <h1 className="text-3xl ml-2">Creation Board</h1>
+        <div className="min-h-screen bg-black text-white py-12 px-8">
+        <h1 className="text-3xl ml-2 mb-2">Creation Board</h1>
+        <div className="mb-8 h-px w-full bg-gradient-to-r from-indigo-700 via-indigo-500 to-transparent" />
+        <div className="flex justify-evenly mb-10">
+            <button className={currentStep === 1 ? "bg-yellow-300 text-black border-2 border-yellow-600 p-2 rounded-full text-yellow font-bold"
+             : "border-[1px] border-gray-500 text-gray-300 p-2 rounded-full hover:scale-95 transition-all duration-200"}
+                    onClick={() => setCurrentStep(1)}>
+                Create Organisation
+            </button>
+            <button className={currentStep === 2 ? "bg-yellow-300 text-black border-2 border-yellow-600 p-2 rounded-full text-yellow font-bold"
+             : "border-[1px] border-gray-500 text-gray-300 p-2 rounded-full hover:scale-95 transition-all duration-200"}
+                    onClick={() => setCurrentStep(2)}>
+                Create Department
+            </button>
+            <button className={currentStep === 3 ? "bg-yellow-300 text-black border-2 border-yellow-600 p-2 rounded-full text-yellow font-bold"
+             : "border-[1px] border-gray-500 text-gray-300 p-2 rounded-full hover:scale-95 transition-all duration-200"}
+                    onClick={() => setCurrentStep(3)}>
+                Create Issue
+            </button>
+        </div>
         <div className="mb-8 h-px w-full bg-gradient-to-r from-indigo-700 via-indigo-500 to-transparent" />
 
         {/* ── Stepper ── */}
-        <div className="flex items-center justify-center gap-0 mb-10">
+        <div className="flex items-center justify-center gap-0 mb-10 mt-10">
             {steps.map((s, i) => (
             <div key={s.number} className="flex items-center">
                 <div className="flex flex-col items-center gap-1">

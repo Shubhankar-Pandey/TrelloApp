@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const OWNER_LINKS = [
   { label: "My Dashboard",    to: "/mydashboard"    },
   { label: "My Organisations", to: "/myOrganisations" },
-  { label: "Creation Board",  to: "/creationBoard/1" },
+  { label: "Creation Board",  to: "/creationBoard" },
   { label: "My Issues",       to: "/myIssues"        },
   { label: "Issue Tracker",   to: "/issueTracker"    },
   { label: "Requests",        to: "/requests"        },

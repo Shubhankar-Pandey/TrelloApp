@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeSignupData, setLoading } from '../Redux/authSlice';
 import { signup } from '../Services/Operations/authAPI';
+import { sendOtp } from '../Services/Operations/authAPI';
+
 
 
 function VerifyEmailPage() {
@@ -62,13 +64,34 @@ function VerifyEmailPage() {
 
         dispatch(setLoading(true));
         const otp = code;
-        console.log("signupData : ", signupData);
-        console.log("otp code : ", otp);
         
-        await signup(signupData.password, signupData.confirmPassword, otp, signupData.firstName, signupData.lastName, signupData.email, signupData.role, navigate);
+        try{
+            const response = await signup(signupData.password, signupData.confirmPassword, otp, signupData.firstName, signupData.lastName, signupData.email, signupData.role, navigate);
+            if(!response || !response.success){
+                return;
+            }
+            dispatch(removeSignupData(null));
+        }
+        catch(error){
+            console.log(error);
+        }
+        finally{
+            dispatch(setLoading(false));
+        }        
+        
+    }
 
-        dispatch(setLoading(false));
-        dispatch(removeSignupData(null));
+    async function handleRendOtp() {
+        try{
+            dispatch(setLoading(true));
+            const response = await sendOtp(signupData.email, navigate);
+            toast.success("OTP sent");
+            dispatch(setLoading(false));
+        }
+        catch(error){
+            console.log(error);
+            toast.error(error.message);
+        }
     }
 
     return (
@@ -169,7 +192,7 @@ function VerifyEmailPage() {
                     {/* Resend */}
                     <p className='text-center text-white/30 text-xs mt-6 font-light'>
                         Didn't receive a code?{' '}
-                        <button className='text-[#B19EEF] hover:text-[#FF9FFC] transition-colors duration-200 cursor-pointer bg-transparent border-none'>
+                        <button onClick={() => handleRendOtp()} className='text-[#B19EEF] hover:text-[#FF9FFC] transition-colors duration-200 cursor-pointer bg-transparent border-none'>
                             Resend code
                         </button>
                     </p>

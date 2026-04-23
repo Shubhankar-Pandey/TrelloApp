@@ -49,7 +49,7 @@ function MyOrganisations() {
   
   const navigate = useNavigate();
   function handleOnClick(){
-    navigate(`/creationBoard/${1}`);
+    navigate("/creationBoard", {state : {step : 1}});
   }
 
   return (

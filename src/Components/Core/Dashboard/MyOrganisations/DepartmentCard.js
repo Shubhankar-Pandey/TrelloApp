@@ -24,7 +24,7 @@ function DepartmentCard({ dept, apiCall }) {
 
   // ✏️ Write your create-issue logic here
   const handleCreateIssue = () => {
-    navigate(`/creationBoard/${3}`);
+    navigate("/creationBoard", {state : {step : 3}});
   };
 
   function onUpdateIssue(issueId){
@@ -130,14 +130,16 @@ function DepartmentCard({ dept, apiCall }) {
                 <div className="flex flex-col items-center gap-3">
                   <button
                     onClick={() => onUpdateIssue(issue._id)}
-                    className="text-xs text-blue-400 hover:scale-95 border-[1px] rounded-full border-blue-400 px-2 py-1 transition-all duration-200"
+                    className="px-2 py-1 text-sm rounded-xl text-white border-2 border-blue-600
+                              bg-blue-500/20 hover:scale-95 transition-all duration-200"
                   >
                     Update
                   </button>
 
                   <button
                     onClick={() => onDeleteIssue(issue._id)}
-                    className="text-xs text-red-400 hover:scale-95 border-[1px] rounded-full border-red-400 px-2 py-1 transition-all duration-200"
+                    className="px-2 py-1 text-sm rounded-xl text-white border-2 border-red-600
+                              bg-red-500/20 hover:scale-95 transition-all duration-200"
                   >
                     Delete
                   </button>

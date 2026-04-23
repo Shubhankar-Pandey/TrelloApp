@@ -5,11 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../Redux/authSlice';
 import { login } from '../Services/Operations/authAPI';
+import { useState } from 'react';
+import { IoEye } from "react-icons/io5";
+import { IoMdEyeOff } from "react-icons/io";
+
 
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
+  const [visible, setVisible] = useState(false);
+
 
   const {
     register,
@@ -97,7 +103,7 @@ function LoginPage() {
             </div>
 
             {/* Password */}
-            <div>
+            <div className='relative'>
               <div className="flex justify-between items-center">
                 <label className="text-gray-400 text-xs font-medium uppercase tracking-wide">
                   Password
@@ -107,8 +113,8 @@ function LoginPage() {
                 </a>
               </div>
               <input
-                type="password"
-                placeholder="••••••••"
+                type = {visible === false ? "password" : "text"}
+                placeholder="Enter Password"
                 {...register("password", { required: "Password is required" })}
                 className={`mt-1 p-3 w-full bg-gray-800 border rounded-xl text-gray-100 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
                   errors.password ? 'border-red-500' : 'border-gray-700'
@@ -117,6 +123,11 @@ function LoginPage() {
               {errors.password && (
                 <p className="text-red-400 text-xs mt-1">{errors.password.message}</p>
               )}
+              {
+                visible === false ? 
+                <button type="button" onClick={() => setVisible(true)}> <IoEye className='text-white text-2xl absolute right-3 top-8'/> </button>
+                : <button type='button' onClick={() => setVisible(false)}> <IoMdEyeOff className='text-white text-2xl absolute right-3 top-8'/> </button>
+              }
             </div>
 
             {/* Button */}

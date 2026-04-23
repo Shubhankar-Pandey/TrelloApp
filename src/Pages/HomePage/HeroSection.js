@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import Orb from '../../../ReactBitComponents/Orb';
-import GradientText from '../../../ReactBitComponents/GradientText';
-import Particles from '../../../ReactBitComponents/Particles';
+import Orb from '../../ReactBitComponents/Orb';
+import GradientText from '../../ReactBitComponents/GradientText';
+import Particles from '../../ReactBitComponents/Particles';
 
 function StatCard({ number, label }) {
     return (

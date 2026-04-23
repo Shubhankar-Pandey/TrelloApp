@@ -69,14 +69,12 @@ exports.sendRequestByOwner = async(req, res) => {
     try{
         const {userId} = req.user;
         const {to, issueId, organisationId, departmentId, message} = req.body;
-
         if(!userId || !to || !issueId || !message || !organisationId || !departmentId){
             return res.status(400).json({
                 success : false,
                 message : "Details missing",
             })
         }
-
         const alreadyExists = await Request.findOne({
             from: userId,
             to,
@@ -85,8 +83,8 @@ exports.sendRequestByOwner = async(req, res) => {
         });
 
         if (alreadyExists) {
-            return res.status(400).json({
-                success: false,
+            return res.status(200).json({
+                success: true,
                 message: "Request already sent",
             });
         }
@@ -205,23 +203,20 @@ exports.sendRequestByEmployee = async(req, res) => {
                 message : "Either issue not found or this issue is already assigned to someone",
             })
         }
-        console.log("issue Exist 1");
         const alreadyExists = await Request.findOne({
             from: userId,
             to : organisationExist.ownerId,
             issue: issueId,
             status: "Pending"
         });
-        console.log("issue Exist 2");
 
         if (alreadyExists) {
-            return res.status(400).json({
-                success: false,
+            return res.status(200).json({
+                success: true,
                 message: "Request already sent",
             });
         }
 
-        console.log("issue Exist 3");
 
         const newRequest = await Request.create({
             from : userId,
@@ -280,30 +275,51 @@ exports.acceptRequest = async(req, res) => {
             employeeId = existRequest.to;
         }
 
-        const existIssue = await Issue.findByIdAndUpdate(issueId, {
-            assignedTo : employeeId,
-            status : "Assigned",
-        })
+        // const existIssue = await Issue.findByIdAndUpdate(issueId, {
+        //     assignedTo : employeeId,
+        //     status : "Assigned",
+        // })
 
+        const existIssue = await Issue.findById(issueId);
         if(!existIssue){
             return res.status(404).json({
                 success : false, 
                 message : "Issue not found",
             })
         }
+        if(existIssue.status !== "Open"){
+            return res.status(200).json({
+                success : true, 
+                message : "Request already accepted",
+            })
+        }
 
-        const existUser = await User.findByIdAndUpdate(employeeId, {
-            $push : {
-                assignedIssues : issueId,
-            }
+        const updatedIssue = await Issue.findByIdAndUpdate(issueId, {
+            assignedTo : employeeId,
+            status : "Assigned",
         })
 
+        const existUser = await User.findById(employeeId);
         if(!existUser){
             return res.status(404).json({
                 success : false, 
                 message : "User not found",
             })
         }
+
+        const employeeAssignedIssues = existUser.assignedIssues;
+        if(employeeAssignedIssues.includes(issueId)){
+            return res.status(200).json({
+                success : true, 
+                message : "Issue already assigned",
+            })
+        }
+        
+        await User.findByIdAndUpdate(employeeId, {
+            $push : {
+                assignedIssues : issueId,
+            }
+        })
 
         return res.status(200).json({
             success : true, 

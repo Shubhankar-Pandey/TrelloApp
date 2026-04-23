@@ -2,7 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
 import LoginPage from "./Pages/LoginPage";
-import HomePage from "./Pages/HomePage";
+import HomePage from "./Pages/HomePage/HomePage";
 import SignupPage from "./Pages/SignupPage";
 import VerifyEmailPage from "./Pages/VerifyEmailPage"
 import Navbar from "./Components/Common/Navbar";
@@ -40,7 +40,7 @@ function App() {
         }>
           <Route path="/myDashboard" element={<MyDashboard/>}/>
           <Route path="/myOrganisations" element={<MyOrganisations/>}/>
-          <Route path="/creationBoard/:step" element={<CreationBoard/>}/>
+          <Route path="/creationBoard" element={<CreationBoard/>}/>
           <Route path="/myIssues" element={<MyIssue/>}/>
           <Route path="/issueTracker" element={<IssueTracker/>}/>
           <Route path="/requests" element={<Request/>}/>

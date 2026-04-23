@@ -21,7 +21,7 @@ function OrgCard({ org, index, apiCall }) {
 
   // ✏️ Write your create-department logic here
   const handleCreateDepartment = () => {
-    navigate(`/creationBoard/${2}`);
+    navigate("/creationBoard", {state : {step : 2}});
   };
 
   return (

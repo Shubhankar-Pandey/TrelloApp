@@ -131,7 +131,10 @@ function RequestsForOwner() {
         return;
       }
       toast.dismiss(toastId);
-      toast.success("Request sent successfully");
+      toast.success(response.message);
+      fetchPendingRequests();
+      fetchOwnerData();
+      fetchEmployees();
     }
     catch(error){
       toast.dismiss(toastId);

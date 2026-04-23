@@ -52,7 +52,7 @@ function IssueCard({ issue }) {
         <span className="text-[10px] text-slate-500">{formattedDate}</span>
       </div>
         {
-          issue.status === "Assigned" && <div className="text-sm border-[1px] border-green-600 flex items-center justify-center rounded-full bg-green-600/30 py-1">
+          issue.status === "Assigned" && <div className="text-sm border-[1px] border-green-600 flex items-center justify-center rounded-full bg-green-600/30 py-1 px-3">
             {"Assigned To : " + issue?.assignedTo?.firstName + " " + issue?.assignedTo?.lastName}
             </div>
         }
