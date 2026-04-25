@@ -3,7 +3,6 @@ import { getAllDetailsOfEmployee } from "../../../../Services/Operations/employe
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { updateIssueStatus } from "../../../../Services/Operations/issueAPI";
-import { useNavigate } from "react-router-dom";
 
 
 
