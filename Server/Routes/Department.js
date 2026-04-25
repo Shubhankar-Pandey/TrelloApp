@@ -13,8 +13,8 @@ const {createDepartment, getAllPublicIssuesOfDepartment, deleteDepartment,
 
 router.post("/createDepartment", auth, isOwner, createDepartment);
 router.get("/getAllPublicIssuesOfDepartment", getAllPublicIssuesOfDepartment);
-router.post("/deleteDepartment", deleteDepartment);
-router.post("/updateDepartment", updateDepartment);
+router.post("/deleteDepartment", auth, isOwner, deleteDepartment);
+router.post("/updateDepartment", auth, isOwner, updateDepartment);
 
 
 

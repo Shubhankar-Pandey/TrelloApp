@@ -75,8 +75,8 @@ function DepartmentCard({ dept, apiCall }) {
             apiCall();
         }
         catch(error){
-            console.log(error);
-            toast.error(error.message);
+          console.log(error);
+          toast.error(error.message);
         }
       }
     })
@@ -274,12 +274,11 @@ function DepartmentCard({ dept, apiCall }) {
             <button
               onClick={handleCreateIssue}
               className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl
-                        text-sm font-medium text-white bg-gradient-to-r from-indigo-500 to-indigo-600
-                        hover:from-indigo-600 hover:to-indigo-700
-                        transition-all duration-200 shadow-sm hover:shadow-md"
+                        text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700
+                        transition-all duration-200 shadow-sm hover:shadow-md border border-white"
             >
               <HiOutlinePlusSm className="text-base" />
-              Create Issue
+              New Issue
             </button>
           </div>
         </div>

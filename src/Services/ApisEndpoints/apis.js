@@ -17,6 +17,8 @@ export const organisation_endPoints = {
   GET_ALL_ORG : BASE_URL + "/organisation/getAllOrganisationsAndItsDepartments",
   CREATE_ORG : BASE_URL + "/organisation/createOrganisation",
   GET_ALL_PUBLIC_OPEN_ISSUES : BASE_URL + "/organisation/getAllPublicOpenIssues",
+  UPDATE_ORGANISATION : BASE_URL + "/organisation/updateOrganisation",
+  DELETE_ORGANISATION : BASE_URL + "/organisation/deleteOrganisation",
 }
 
 

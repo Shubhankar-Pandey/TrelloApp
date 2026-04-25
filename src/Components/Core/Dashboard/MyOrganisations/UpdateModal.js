@@ -4,7 +4,7 @@ function UpdateModal({ updateModal, setUpdateModal }) {
     const [fields, setFields] = useState({
         title: updateModal.title || "",
         description: updateModal.description || "",
-        privacy: updateModal.privacy || "public",
+        privacy: updateModal.privacy || "Public",
     });
 
     async function handleMakeChanges() {
@@ -74,8 +74,8 @@ function UpdateModal({ updateModal, setUpdateModal }) {
                 onChange={(e) => setFields((prev) => ({ ...prev, privacy: e.target.value }))}
                 className="w-full bg-[#1e1e26] border border-[#2a2a32] rounded-xl text-[#e8e8f0] text-sm px-4 py-3 outline-none focus:border-[#5b5bef] focus:ring-2 focus:ring-[#5b5bef]/20 transition-all"
             >
-                <option value="public">Public</option>
-                <option value="private">Private</option>
+                <option value="Public">Public</option>
+                <option value="Private">Private</option>
             </select>
             </div>
 

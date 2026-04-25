@@ -8,6 +8,8 @@ const {
     GET_ALL_ORG,
     CREATE_ORG,
     GET_ALL_PUBLIC_OPEN_ISSUES,
+    UPDATE_ORGANISATION, 
+    DELETE_ORGANISATION,
 } = organisation_endPoints
 
 
@@ -56,6 +58,41 @@ export const getAllPublicOpenIssues = async(token) => {
     try{
         const response = await apiConnector("GET", GET_ALL_PUBLIC_OPEN_ISSUES, null,
             {Authorization : `Bearer ${token}`}
+        )
+        if(!response || !response.data.success){
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    }
+    catch(error){
+        console.log(error);
+        toast.error("Error while fetching issues");
+    }
+}
+
+
+
+export const updateOrganisation = async(token, organisationId, title, description, privacy) => {
+    try{
+        const response = await apiConnector("POST", UPDATE_ORGANISATION, {organisationId, title, description, privacy},
+            {Authorization : `Bearer ${token}`},
+        )
+        if(!response || !response.data.success){
+            throw new Error(response.data.message);
+        }
+        return response.data;
+    }
+    catch(error){
+        console.log(error);
+        toast.error("Error while fetching issues");
+    }
+}
+
+
+export const deleteOrganisation = async(token, organisationId) => {
+    try{
+        const response = await apiConnector("POST", DELETE_ORGANISATION, {organisationId},
+            {Authorization : `Bearer ${token}`},
         )
         if(!response || !response.data.success){
             throw new Error(response.data.message);
