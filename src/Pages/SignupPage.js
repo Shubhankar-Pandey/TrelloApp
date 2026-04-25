@@ -147,6 +147,7 @@ function SignupPage() {
                                 : <button type='button' onClick={()=>setPasswordVisibe(false)}> <IoMdEyeOff className='absolute text-2xl text-white right-4 top-9'/> </button>
                             }
                             {errors.password && <p className='text-red-400 text-xs'>{errors.password.message}</p>}
+                            <p className='text-indigo-400 mt-1'>• Password must contain atleast 8 characters</p>
                         </div>
 
                         {/* Confirm Password */}

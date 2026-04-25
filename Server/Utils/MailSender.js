@@ -4,21 +4,33 @@ const nodemailer = require("nodemailer");
 // step 1. -> create transporter
 // step 2. -> send mail using transporter
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    type: 'OAuth2',
+    user: process.env.EMAIL_USER,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: process.env.ACCESS_TOKEN,
+  },
+});
+
+// Verify the connection configuration
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('Error connecting to email server:', error);
+  } else {
+    console.log('Email server is ready to send messages');
+  }
+});
+
 
 exports.mailSender = async (email, title, body) => {
     try{
-        // create transporter 
-        let transporter = nodemailer.createTransport({
-            host : process.env.MAIL_HOST, 
-            auth : {
-                user : process.env.MAIL_USER,
-                pass : process.env.MAIL_PASS,
-            }
-        })
-
         // send mail using transporter 
         let info = await transporter.sendMail({
-            from : "Trello App",
+            from : `"Trello App" <${process.env.EMAIL_USER}>`,
             to : `${email}`,
             subject : `${title}`,
             html : `${body}`,
@@ -28,5 +40,6 @@ exports.mailSender = async (email, title, body) => {
     }   
     catch(error){
         console.log("Error in sending mail : error -> ", error);
+        throw error;
     }
 }
