@@ -76,7 +76,7 @@ function MyOrganisations() {
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl
                        bg-indigo-600 hover:bg-indigo-700 active:scale-95
                        text-white text-sm
-                       transition-all duration-150 border-2 border-white"
+                       transition-all duration-150"
           >
             <FaPlus className="text-xs" />
             New Organisation

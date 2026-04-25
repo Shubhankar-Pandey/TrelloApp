@@ -11,14 +11,12 @@ const OWNER_LINKS = [
   { label: "My Issues",       to: "/myIssues"        },
   { label: "Issue Tracker",   to: "/issueTracker"    },
   { label: "Requests",        to: "/requests"        },
-  { label: "Settings",        to: "/settings"        },
 ];
 
 const EMPLOYEE_LINKS = [
   { label: "My Dashboard",  to: "/myDashboard"    },
   { label: "Issue Tracker", to: "/issueTracker" },
   { label: "Requests",      to: "/requests"             },
-  { label: "Settings",      to: "/settings"             },
 ];
 
 function Sidebar() {

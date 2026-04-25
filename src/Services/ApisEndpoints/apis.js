@@ -26,12 +26,15 @@ export const issue_endPoints = {
   CREATE_ISSUE : BASE_URL + "/organisation/department/issue/createIssue",
   UPDATE_ISSUE_STATUS : BASE_URL + "/organisation/department/issue/updateIssueStatus",
   DELETE_ISSUE : BASE_URL + "/organisation/department/issue/deleteIssue",
+  UPDATE_ISSUE : BASE_URL + "/organisation/department/issue/updateIssue",
 }
 
 
 // department end points 
 export const department_endPoints = {
   CREATE_DEPARTMENT : BASE_URL + "/organisation/department/createDepartment",
+  DELETE_DEPARTMENT : BASE_URL + "/organisation/department/deleteDepartment",
+  UPDATE_DEPARTMENT : BASE_URL + "/organisation/department/updateDepartment",
 }
 
 

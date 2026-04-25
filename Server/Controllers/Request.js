@@ -275,11 +275,6 @@ exports.acceptRequest = async(req, res) => {
             employeeId = existRequest.to;
         }
 
-        // const existIssue = await Issue.findByIdAndUpdate(issueId, {
-        //     assignedTo : employeeId,
-        //     status : "Assigned",
-        // })
-
         const existIssue = await Issue.findById(issueId);
         if(!existIssue){
             return res.status(404).json({

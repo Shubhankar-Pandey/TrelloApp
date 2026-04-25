@@ -6,7 +6,9 @@ const {
     GET_ALL_PUBLIC_ISSUE_DETAILS,
     CREATE_ISSUE,
     UPDATE_ISSUE_STATUS,
-    DELETE_ISSUE
+    DELETE_ISSUE,
+    GET_ISSUE_DETAILS,
+    UPDATE_ISSUE
 } = issue_endPoints;
 
 
@@ -80,6 +82,25 @@ export const deleteIssue = async(issueId, token) => {
             throw new Error("Delete issue request failed");
         }
         return response;
+    }
+    catch(error){
+        console.log(error);
+        toast.error(error.message);
+    }
+}
+
+
+
+export const updateIssue = async(token, id, title, description, privacy) => {
+    try{
+        const response = await apiConnector("POST", UPDATE_ISSUE, {id, title, description, privacy}, 
+            {Authorization : `Bearer ${token}`}
+        )
+        if(!response || !response.data.success){
+            toast.error("Request failed");
+            return;
+        }
+        return response.data;
     }
     catch(error){
         console.log(error);

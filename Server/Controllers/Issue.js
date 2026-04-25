@@ -260,3 +260,43 @@ exports.updateIssueStatus = async(req, res) => {
         })
     }
 }
+
+
+
+exports.updateIssue = async(req, res) => {
+    try{
+        const {id, title, description, privacy} = req.body;
+        if(!id || !title || !description || !privacy){
+            return res.status(400).json({
+                success : false, 
+                message : "Bad request",
+            })
+        }
+
+        const existIssue = await Issue.findById(id);
+        if(!existIssue){
+            return res.status(404).json({
+                success : false, 
+                message : "Issue not found",
+            })
+        }
+
+        await Issue.findByIdAndUpdate(id, {
+            title,
+            description,
+            privacy,
+        })
+
+        return res.status(200).json({
+            success : true, 
+            message : "Issue updatad successfully",
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error",
+        })
+    }
+}

@@ -102,8 +102,8 @@ function OrgCard({ org, index, apiCall }) {
           onClick={handleCreateDepartment}
           className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl
                      border border-white text-white text-sm
-                     transition-all duration-200 cursor-pointer bg-indigo-600
-                     hover:bg-indigo-700 hover:scale-95"
+                     transition-all duration-200 cursor-pointer bg-yellow-600
+                     hover:bg-yellow-700 hover:scale-95"
         >
           <HiOutlinePlusSm className="text-base" />
           Create Department
