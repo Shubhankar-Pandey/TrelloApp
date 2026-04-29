@@ -8,7 +8,8 @@ const Otp = require("../Models/Otp");
 
 exports.sendOtp = async(req, res) => {
     try{
-        let {email} = req.body;
+        console.log("req.body : ", req.body);
+        let {email, password, confirmPassword} = req.body;
 
         if(!email){
             return res.status(401).json({
@@ -17,13 +18,10 @@ exports.sendOtp = async(req, res) => {
             })
         }
 
-        email = email.toLowerCase();
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
+        if(password !== confirmPassword){
             return res.status(400).json({
                 success: false,
-                message: "Invalid email format",
+                message: "Password and confirmPassword is not matching",
             });
         }
 
@@ -68,7 +66,6 @@ exports.sendOtp = async(req, res) => {
 
 exports.signup = async(req, res) => {
     try{
-        // console.log("reached in signup controller in server : ", req.body);
         const {password, confirmPassword, firstName, lastName, role, otp} = req.body;
         let {email} = req.body;
         
@@ -79,16 +76,6 @@ exports.signup = async(req, res) => {
             })
         }
 
-        email = email.toLowerCase();
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid email format",
-            });
-        }
-
         if(password !== confirmPassword){
             return res.status(400).json({
                 success: false,
@@ -96,7 +83,6 @@ exports.signup = async(req, res) => {
             });
         }
 
-        // console.log("before finding userExist");
         const userExist = await User.findOne({email});
         if(userExist){
             return res.status(403).json({
@@ -105,7 +91,6 @@ exports.signup = async(req, res) => {
             })
         }
 
-        // console.log("before otp checking");
         const compareOtp = await Otp.findOne({email});
         if(!compareOtp || otp !== compareOtp.otp){
             return res.status(400).json({
@@ -114,10 +99,8 @@ exports.signup = async(req, res) => {
             });
         }
 
-        // console.log("before password hashing");
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // console.log("before user creation");
         await User.create({
             email,
             password : hashedPassword,
@@ -125,7 +108,6 @@ exports.signup = async(req, res) => {
             lastName,
             role,
         })
-        // console.log("after user creation");
 
         return res.status(200).json({
             success : true,
@@ -133,6 +115,7 @@ exports.signup = async(req, res) => {
         })
     }   
     catch(error){
+        console.log("error : ", error);
         return res.status(500).json({
             success : false,
             message : error.message,

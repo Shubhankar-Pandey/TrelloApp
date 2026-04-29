@@ -32,9 +32,10 @@ function SignupPage() {
     const password = watch('password');
 
     async function onSubmit(data) {
+        // console.log("onsubmit, : ", data);
         dispatch(setSignupData(data));
         dispatch(setLoading(true));
-        await sendOtp(data.email, navigate);
+        await sendOtp(data.email, data.password, data.confirmPassword, navigate);
         dispatch(setLoading(false));
     }
 
@@ -148,6 +149,12 @@ function SignupPage() {
                             }
                             {errors.password && <p className='text-red-400 text-xs'>{errors.password.message}</p>}
                             <p className='text-indigo-400 mt-1'>• Password must contain atleast 8 characters</p>
+                            <p className='text-indigo-400 mt-1'>• Password must be less than 20 characters</p>
+                            <p className='text-indigo-400 mt-1'>• Password must contain at least one uppercase letter</p>
+                            <p className='text-indigo-400 mt-1'>• Password must contain at least one lowercase letter</p>
+                            <p className='text-indigo-400 mt-1'>• Password must contain at least one number</p>
+                            <p className='text-indigo-400 mt-1'>• Password must contain at least one special character</p>
+
                         </div>
 
                         {/* Confirm Password */}

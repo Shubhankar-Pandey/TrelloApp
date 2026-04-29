@@ -16,13 +16,12 @@ const {
 
 
 
-export const sendOtp = async(email, navigate) => {
-    const toastId = toast.loading("Loading...");
+export const sendOtp = async(email, password, confirmPassword, navigate) => {
     try{
-        const response = await apiConnector("POST", SENDOTP_API, {email});
-
+        const response = await apiConnector("POST", SENDOTP_API, {email, password, confirmPassword});
         if(!response.data.success){
-            throw new Error(response.data.message);
+            toast.error(response.data.message);
+            return;
         }
 
         toast.success("OTP sent successfully");
@@ -30,18 +29,15 @@ export const sendOtp = async(email, navigate) => {
     }
     catch(error){
         console.log("SENDOTP API ERROR............", error)
-        toast.error("Could Not Send OTP")
+        toast.error(error);
     }
-    toast.dismiss(toastId)
 }
 
 
 
 
 export const signup = async(password, confirmPassword, otp,  firstName, lastName, email, role, navigate) => {
-    // console.log("reached in sign services");
     try{
-        // console.log(password, " ", confirmPassword, " ", role, " ", otp, " ", email);
         const response = await apiConnector("POST", SIGNUP_API, {
             password,
             confirmPassword,
@@ -51,7 +47,6 @@ export const signup = async(password, confirmPassword, otp,  firstName, lastName
             otp,
             email
         })
-        // console.log("signup api response : ", response);
         if(!response.data.success){
             throw new Error(response.data.message);
         }
